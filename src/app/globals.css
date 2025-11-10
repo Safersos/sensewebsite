@@ -267,6 +267,7 @@
   .glass-board {
     position: relative;
     filter: drop-shadow(0 30px 80px rgba(12, 18, 54, 0.45));
+    perspective: 900px;
   }
 
   .glass-board .board-surface {
@@ -358,7 +359,7 @@
 
   .chip-card {
     position: absolute;
-    transform: translate(-50%, -50%) scale(0.72);
+    transform: translate(-50%, -50%) translateZ(24px) scale(0.74);
     transform-style: preserve-3d;
     animation: chip-enter 0.9s cubic-bezier(0.21, 1, 0.29, 1) forwards;
     transition: transform 250ms ease, filter 250ms ease;
@@ -375,6 +376,7 @@
       inset 0 1px 0 rgba(255, 255, 255, 0.12);
     background: rgba(17, 24, 39, 0.78);
     backdrop-filter: blur(8px);
+    transform: translateZ(8px);
   }
 
   .chip-card__image {
@@ -413,7 +415,7 @@
   }
 
   .glass-board:hover .chip-card {
-    transform: translate(-50%, -50%) scale(0.76);
+    transform: translate(-50%, -50%) translateZ(42px) scale(0.78);
   }
 
   .glass-board:hover .chip-card__glow {
@@ -481,12 +483,12 @@
 
   @keyframes chip-enter {
     0% {
-      transform: translate(-50%, -50%) scale(0.64);
+      transform: translate(-50%, -50%) translateZ(0px) scale(0.64);
       opacity: 0;
     }
 
     100% {
-      transform: translate(-50%, -50%) scale(0.72);
+      transform: translate(-50%, -50%) translateZ(24px) scale(0.74);
       opacity: 1;
     }
   }
@@ -520,6 +522,33 @@
   filter: saturate(0.9) contrast(1.1);
   mix-blend-mode: screen;
   pointer-events: none;
+}
+
+.splash-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(2, 6, 23, 0.92);
+  animation: splash-fade-in 400ms ease forwards;
+  transition: opacity 400ms ease;
+}
+
+.splash-screen__image {
+  width: min(220px, 40vw);
+  height: auto;
+}
+
+@keyframes splash-fade-in {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 
 :root {
