@@ -89,15 +89,12 @@ export function CircularLogosScroll() {
     }
   }, [controls, inView, rotation]);
 
-  useAnimationFrame(
-    (time, delta) => {
-      if (!inView || prefersReducedMotion || !hasActivated.current) return;
-      const current = rotation.get();
-      const increment = (delta / 8000) * 360 * direction;
-      rotation.set(current + increment);
-    },
-    [direction, inView, prefersReducedMotion],
-  );
+  useAnimationFrame((time, delta) => {
+    if (!inView || prefersReducedMotion || !hasActivated.current) return;
+    const current = rotation.get();
+    const increment = (delta / 8000) * 360 * direction;
+    rotation.set(current + increment);
+  });
 
   return (
     <section ref={ref} className="relative flex min-h-[60vh] w-full items-center justify-center py-24">
