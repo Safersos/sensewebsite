@@ -1,7 +1,7 @@
 "use client";
 
 import Image, { type StaticImageData } from "next/image";
-import { type CSSProperties, useRef } from "react";
+import { type CSSProperties, useEffect, useRef, useState } from "react";
 import { motion, useScroll, useSpring, useTime, useTransform } from "framer-motion";
 
 import SnapdragonCenter from "../../../assets/snapdragon.png";
@@ -10,6 +10,13 @@ import SamsungEmmc from "../../../assets/eMMC.png";
 import QualcommPmic from "../../../assets/PMIC.png";
 import SenseMcu from "../../../assets/SENSEMCU.png";
 import PcbTexture from "../../../assets/pcb2.png";
+
+type ChipResponsiveOverride = {
+    x?: number;
+    y?: number;
+    width?: number;
+    height?: number;
+};
 
 type ChipSpec = {
     id: string;
@@ -20,6 +27,7 @@ type ChipSpec = {
     y: number; // 0 - 1 (percentage of board height)
     delay: number;
     glowColor: string;
+    sm?: ChipResponsiveOverride;
 };
 
 type BubbleParticle = {
@@ -42,6 +50,10 @@ const CHIP_SPECS: ChipSpec[] = [
         y: 0.28,
         delay: 0.45,
         glowColor: "rgba(59, 130, 246, 0.35)",
+        sm: {
+            x: 0.26,
+            y: 0.26,
+        },
     },
     {
         id: "emmc",
@@ -52,6 +64,10 @@ const CHIP_SPECS: ChipSpec[] = [
         y: 0.28,
         delay: 0.85,
         glowColor: "rgba(249, 115, 22, 0.38)",
+        sm: {
+            x: 0.83,
+            y: 0.32,
+        },
     },
     {
         id: "pmic",
@@ -62,6 +78,10 @@ const CHIP_SPECS: ChipSpec[] = [
         y: 0.60,
         delay: 1.2,
         glowColor: "rgba(16, 185, 129, 0.32)",
+        sm: {
+            x: 0.80,
+            y: 0.64,
+        },
     },
     {
         id: "sense-mcu",
@@ -72,6 +92,10 @@ const CHIP_SPECS: ChipSpec[] = [
         y: 0.70,
         delay: 1.55,
         glowColor: "rgba(96, 165, 250, 0.32)",
+        sm: {
+            x: 0.27,
+            y: 0.73,
+        },
     },
 ];
 
@@ -102,6 +126,37 @@ const POWER_PULSE_DELAYS = [0, 1.8, 3.6];
 
 export function AnimatedSnapdragonBoard() {
     const boardRef = useRef<HTMLDivElement>(null);
+    const [isCompact, setIsCompact] = useState(false);
+    const [isZoomSuppressed, setIsZoomSuppressed] = useState(false);
+    useEffect(() => {
+        if (typeof window === "undefined") {
+            return;
+        }
+        const mediaQuery = window.matchMedia("(max-width: 640px)");
+        const updateMatch = () => setIsCompact(mediaQuery.matches);
+        updateMatch();
+        mediaQuery.addEventListener("change", updateMatch);
+        return () => {
+            mediaQuery.removeEventListener("change", updateMatch);
+        };
+    }, []);
+    useEffect(() => {
+        if (typeof window === "undefined" || !window.visualViewport) {
+            return;
+        }
+        const { visualViewport } = window;
+        const handleZoom = () => {
+            const scale = visualViewport?.scale ?? 1;
+            setIsZoomSuppressed(scale > 1.35);
+        };
+        handleZoom();
+        visualViewport.addEventListener("resize", handleZoom);
+        visualViewport.addEventListener("scroll", handleZoom);
+        return () => {
+            visualViewport.removeEventListener("resize", handleZoom);
+            visualViewport.removeEventListener("scroll", handleZoom);
+        };
+    }, []);
     const { scrollYProgress } = useScroll({
         target: boardRef,
         offset: ["start 92%", "end 8%"],
@@ -133,14 +188,17 @@ export function AnimatedSnapdragonBoard() {
         <motion.div
             ref={boardRef}
             className="relative mx-auto aspect-square w-full max-w-[320px] sm:max-w-[380px] lg:max-w-[420px] xl:max-w-[460px] 2xl:max-w-[500px]"
-            style={{ perspective: 1600, y: lift }}
+            style={{
+                perspective: isZoomSuppressed ? 1200 : 1600,
+                y: isZoomSuppressed ? 0 : lift,
+            }}
         >
             <motion.div
                 className="glass-board group relative h-full w-full"
                 style={{
-                    rotateX,
-                    rotateY: rotateYWithWobble,
-                    transformStyle: "preserve-3d",
+                    rotateX: isZoomSuppressed ? 0 : rotateX,
+                    rotateY: isZoomSuppressed ? 0 : rotateYWithWobble,
+                    transformStyle: isZoomSuppressed ? "flat" : "preserve-3d",
                     willChange: "transform",
                 }}
             >
@@ -198,7 +256,7 @@ export function AnimatedSnapdragonBoard() {
 
       </svg>
 
-            <div className="floating-bubbles">
+            <div className="floating-bubbles" style={{ opacity: isZoomSuppressed ? 0 : 1 }}>
                 {BUBBLE_PARTICLES.map((bubble, index) => (
                     <span
                         key={`bubble-${index}`}
@@ -206,6 +264,8 @@ export function AnimatedSnapdragonBoard() {
                         style={{
                             animationDelay: `${bubble.delay}s`,
                             animationDuration: `${bubble.duration}s`,
+                            animationPlayState: isZoomSuppressed ? "paused" : undefined,
+                            opacity: isZoomSuppressed ? 0 : undefined,
                             "--tx": `${bubble.tx}px`,
                             "--ty": `${bubble.ty}px`,
                             "--bounce-tx": `${bubble.bounceTx}px`,
@@ -217,9 +277,27 @@ export function AnimatedSnapdragonBoard() {
             </div>
             <div className="core-chip absolute" style={{ left: `calc(50% - ${CORE_SIZE / 2}px)`, top: `calc(50% - ${CORE_SIZE / 2}px)`, width: CORE_SIZE, height: CORE_SIZE }}>
                 {POWER_PULSE_DELAYS.map((delay) => (
-                    <span key={`pulse-${delay}`} className="core-chip__pulse" style={{ animationDelay: `${delay}s` }} />
+                    <span
+                        key={`pulse-${delay}`}
+                        className="core-chip__pulse"
+                        style={{
+                            animationDelay: `${delay}s`,
+                            animationPlayState: isZoomSuppressed ? "paused" : undefined,
+                            opacity: isZoomSuppressed ? 0 : undefined,
+                        }}
+                    />
                 ))}
-                <div className="core-chip__glow" />
+                <div
+                    className="core-chip__glow"
+                    style={
+                        isZoomSuppressed
+                            ? {
+                                  opacity: 0.55,
+                                  filter: "blur(26px)",
+                              }
+                            : undefined
+                    }
+                />
                 <Image
                     src={SnapdragonCenter}
                     alt="Snapdragon 8 Elite"
@@ -232,33 +310,42 @@ export function AnimatedSnapdragonBoard() {
                 <div className="core-chip__glass" />
             </div>
 
-            {CHIP_SPECS.map((chip) => (
-                <div
-                    key={chip.id}
-                    className="chip-card"
-                    style={{
-                        top: `${chip.y * 100}%`,
-                        left: `${chip.x * 100}%`,
-                        width: `${chip.width}px`,
-                        height: `${chip.height}px`,
-                        animationDelay: `${chip.delay}s`,
-                    }}
-                >
-                    <div className="chip-card__glow" style={{ background: chip.glowColor }} />
-                    <div className="chip-card__body">
-                        <Image
-                            src={chip.image}
-                            alt={chip.id.replace("-", " ")}
-                            fill
-                            sizes="140px"
-                            className="chip-card__image"
-                            priority={chip.id === "lpddr5"}
-                        />
-                        <div className="chip-card__frame" />
-                        <div className="chip-card__glass" />
+            {CHIP_SPECS.map((chip) => {
+                const overrides = isCompact ? chip.sm : undefined;
+                const effectiveX = overrides?.x ?? chip.x;
+                const effectiveY = overrides?.y ?? chip.y;
+                const effectiveWidth = overrides?.width ?? chip.width;
+                const effectiveHeight = overrides?.height ?? chip.height;
+
+                return (
+                    <div
+                        key={chip.id}
+                        className="chip-card"
+                        style={{
+                            top: `${effectiveY * 100}%`,
+                            left: `${effectiveX * 100}%`,
+                            width: `${effectiveWidth}px`,
+                            height: `${effectiveHeight}px`,
+                            animationPlayState: isZoomSuppressed ? "paused" : undefined,
+                            animationDelay: `${chip.delay}s`,
+                        }}
+                    >
+                        <div className="chip-card__glow" style={{ background: chip.glowColor }} />
+                        <div className="chip-card__body">
+                            <Image
+                                src={chip.image}
+                                alt={chip.id.replace("-", " ")}
+                                fill
+                                sizes="140px"
+                                className="chip-card__image"
+                                priority={chip.id === "lpddr5"}
+                            />
+                            <div className="chip-card__frame" />
+                            <div className="chip-card__glass" />
+                        </div>
                     </div>
-                </div>
-            ))}
+                );
+            })}
 
             </motion.div>
         </motion.div>
