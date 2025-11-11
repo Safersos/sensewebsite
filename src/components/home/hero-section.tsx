@@ -73,7 +73,7 @@ export function HeroSection() {
         </div>
       </div>
       <div className="relative z-10 mt-24 flex w-full max-w-5xl flex-col items-center text-center">
-        <div className="relative flex w-full max-w-3xl flex-col items-center gap-[2px]">
+        <div className="relative flex w-full max-w-2xl flex-col items-center">
           <div className="h-[68px] w-full">
             <TextParticle
               text="Sense is your real world Jarvis"
@@ -86,18 +86,18 @@ export function HeroSection() {
             />
           </div>
         </div>
-        <div className="relative mt-2 w-full max-w-3xl">
-          <div className="relative mx-auto flex w-full max-w-xl items-center justify-center">
+        <div className="relative mt-0 w-full max-w-2xl">
+          <div className="relative mx-auto flex w-full max-w-[420px] items-center justify-center">
             <Image
               src={PodGif}
               alt="Sense pod animation"
               priority
               unoptimized
-              className="w-full max-w-[480px] drop-shadow-[0_30px_60px_rgba(10,8,30,0.55)]"
+              className="w-full max-w-[420px] drop-shadow-[0_30px_60px_rgba(10,8,30,0.55)]"
             />
           </div>
         </div>
-        <div className="relative mt-20 flex w-full max-w-4xl flex-col items-center px-6 text-white/80">
+        <div className="relative mt-14 flex w-full max-w-4xl flex-col items-center px-6 text-white/80">
           <span className="text-xs uppercase tracking-[0.32em] text-white/50">
             Snapdragon 8 Elite Core
           </span>
@@ -108,7 +108,7 @@ export function HeroSection() {
             Snapdragon silicon orchestrates every biometric, haptic, and neural routine inside Sense, working in harmony
             with Samsung memory and Qualcomm power management.
           </p>
-          <div className="relative mt-10 w-full">
+          <div className="relative mt-8 w-full">
             <AnimatedSnapdragonBoard />
           </div>
         </div>
