@@ -52,7 +52,9 @@ const CHIP_SPECS: ChipSpec[] = [
         glowColor: "rgba(59, 130, 246, 0.35)",
         sm: {
             x: 0.26,
-            y: 0.26,
+            y: 0.24,
+            width: 82,
+            height: 54,
         },
     },
     {
@@ -65,8 +67,10 @@ const CHIP_SPECS: ChipSpec[] = [
         delay: 0.85,
         glowColor: "rgba(249, 115, 22, 0.38)",
         sm: {
-            x: 0.83,
-            y: 0.32,
+            x: 0.82,
+            y: 0.34,
+            width: 78,
+            height: 52,
         },
     },
     {
@@ -79,8 +83,10 @@ const CHIP_SPECS: ChipSpec[] = [
         delay: 1.2,
         glowColor: "rgba(16, 185, 129, 0.32)",
         sm: {
-            x: 0.80,
-            y: 0.64,
+            x: 0.76,
+            y: 0.66,
+            width: 80,
+            height: 52,
         },
     },
     {
@@ -93,8 +99,10 @@ const CHIP_SPECS: ChipSpec[] = [
         delay: 1.55,
         glowColor: "rgba(96, 165, 250, 0.32)",
         sm: {
-            x: 0.27,
-            y: 0.73,
+            x: 0.28,
+            y: 0.76,
+            width: 80,
+            height: 52,
         },
     },
 ];
@@ -102,6 +110,7 @@ const CHIP_SPECS: ChipSpec[] = [
 const BOARD_DIMENSION = 400;
 const CORE_SIZE = 108;
 const CORE_SCALE = (CORE_SIZE / BOARD_DIMENSION) * 100;
+const CORE_SIZE_COMPACT = 96;
 
 const BUBBLE_PARTICLES: BubbleParticle[] = [
   { tx: -100, ty: -120, bounceTx: -160, bounceTy: -40, size: 12, delay: 0, duration: 4 },
@@ -279,7 +288,15 @@ export function AnimatedSnapdragonBoard() {
                     />
                 ))}
             </div>
-            <div className="core-chip absolute" style={{ left: `calc(50% - ${CORE_SIZE / 2}px)`, top: `calc(50% - ${CORE_SIZE / 2}px)`, width: CORE_SIZE, height: CORE_SIZE }}>
+            <div
+                className="core-chip absolute"
+                style={{
+                    left: `calc(50% - ${(isLowPowerMode ? CORE_SIZE_COMPACT : CORE_SIZE) / 2}px)`,
+                    top: `calc(50% - ${(isLowPowerMode ? CORE_SIZE_COMPACT : CORE_SIZE) / 2}px)`,
+                    width: isLowPowerMode ? CORE_SIZE_COMPACT : CORE_SIZE,
+                    height: isLowPowerMode ? CORE_SIZE_COMPACT : CORE_SIZE,
+                }}
+            >
                 {POWER_PULSE_DELAYS.map((delay) => (
                     <span
                         key={`pulse-${delay}`}
@@ -315,7 +332,7 @@ export function AnimatedSnapdragonBoard() {
             </div>
 
             {CHIP_SPECS.map((chip) => {
-                const overrides = isCompact ? chip.sm : undefined;
+                const overrides = isLowPowerMode ? chip.sm : undefined;
                 const effectiveX = overrides?.x ?? chip.x;
                 const effectiveY = overrides?.y ?? chip.y;
                 const effectiveWidth = overrides?.width ?? chip.width;
