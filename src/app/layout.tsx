@@ -5,6 +5,7 @@ import { SiteDock } from "@/components/navigation/site-dock";
 import { NeuralCursor } from "@/components/ui/neural-cursor";
 import { PageTransition } from "@/components/ui/page-transition";
 import { SplashScreen } from "@/components/ui/splash-screen";
+import { DisableContextMenu } from "@/components/ui/disable-context-menu";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,6 +38,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${playfairDisplay.variable} antialiased`}
       >
+        <DisableContextMenu />
         <SplashScreen />
         <NeuralCursor />
         <SiteDock />
