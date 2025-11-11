@@ -120,6 +120,12 @@ export default function AboutPage() {
     <main className="relative bg-neutral-950 text-white">
       <section className="relative">
         <BackgroundPaths title="Sense in Motion">
+          <span className="pointer-events-auto absolute left-4 top-[7vh] -translate-y-4 rounded-full border border-neutral-900/15 bg-white/90 px-4 py-2 text-xs uppercase tracking-[0.28em] text-neutral-900/70 backdrop-blur-md sm:left-6 sm:top-[14vh] sm:-translate-y-24 sm:text-sm md:hidden">
+            Learn about Sense
+          </span>
+          <span className="pointer-events-auto absolute left-6 top-[14vh] hidden -translate-y-14 rounded-full border border-neutral-900/15 bg-white/90 px-5 py-2.5 text-sm uppercase tracking-[0.32em] text-neutral-900/70 backdrop-blur-md md:block lg:left-12 xl:left-16">
+            Learn about Sense
+          </span>
           <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-12 text-center">
             <div className="flex w-full items-center justify-center lg:hidden">
               <SphereImageGrid

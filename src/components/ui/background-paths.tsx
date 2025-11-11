@@ -13,7 +13,13 @@ type GeneratedPath = {
   offset: number;
 };
 
-function FloatingPaths({ position }: { position: number }) {
+function FloatingPaths({
+  position,
+  speedFactor = 1,
+}: {
+  position: number;
+  speedFactor?: number;
+}) {
   const paths = React.useMemo<GeneratedPath[]>(
     () =>
       Array.from({ length: 32 }, (_, i) => {
@@ -78,7 +84,7 @@ function FloatingPaths({ position }: { position: number }) {
             strokeLinecap="round"
             strokeLinejoin="round"
             transition={{
-              duration: 28 + path.id * 0.9,
+              duration: (28 + path.id * 0.9) / speedFactor,
               repeat: Number.POSITIVE_INFINITY,
               ease: "easeInOut",
             }}
@@ -92,17 +98,38 @@ function FloatingPaths({ position }: { position: number }) {
 export function BackgroundPaths({
   title = "Background Paths",
   children,
+  mobileSpeedMultiplier = 1.45,
 }: {
   title?: string;
   children?: React.ReactNode;
+  mobileSpeedMultiplier?: number;
 }) {
   const words = React.useMemo(() => title.split(" "), [title]);
+  const [isMobile, setIsMobile] = React.useState(false);
+
+  React.useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 767px)");
+    const handleChange = (event: MediaQueryListEvent | MediaQueryList) => {
+      setIsMobile(event.matches);
+    };
+
+    handleChange(mediaQuery);
+    mediaQuery.addEventListener("change", handleChange);
+
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
 
   return (
     <div className="relative flex min-h-screen w-full items-center justify-center overflow-hidden bg-white dark:bg-neutral-950">
       <div className="absolute inset-0">
-        <FloatingPaths position={1} />
-        <FloatingPaths position={-1} />
+        <FloatingPaths
+          position={1}
+          speedFactor={isMobile ? mobileSpeedMultiplier : 1}
+        />
+        <FloatingPaths
+          position={-1}
+          speedFactor={isMobile ? mobileSpeedMultiplier : 1}
+        />
       </div>
       <div className="container relative z-10 mx-auto px-4 text-center md:px-6">
         <motion.div
