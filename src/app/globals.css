@@ -350,8 +350,8 @@
   .glass-board .core-chip__glow {
     position: absolute;
     inset: -40%;
-    background: radial-gradient(circle, rgba(253, 224, 71, 0.28), transparent 70%);
-    filter: blur(50px);
+    background: radial-gradient(circle, rgba(253, 224, 71, 0.26), transparent 72%);
+    filter: blur(34px);
     opacity: 0.9;
     animation: core-glow 8s ease-in-out infinite;
   }
@@ -578,9 +578,10 @@
   width: var(--bubble-size, 12px);
   height: var(--bubble-size, 12px);
   border-radius: 9999px;
-  background: radial-gradient(circle, rgba(165, 243, 252, 0.95), rgba(59, 130, 246, 0));
-  filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.6));
+  background: radial-gradient(circle, rgba(165, 243, 252, 0.75), rgba(59, 130, 246, 0));
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.35);
   transform: translate(-50%, -50%) scale(0);
+  will-change: transform, opacity;
   animation: bubble-burst 4.4s ease-in-out infinite;
 }
 
