@@ -5,21 +5,48 @@ import { motion } from "framer-motion";
 
 import { Button } from "@/components/ui/button";
 
+type GeneratedPath = {
+  id: number;
+  d: string;
+  opacity: number;
+  width: number;
+  offset: number;
+};
+
 function FloatingPaths({ position }: { position: number }) {
-  const paths = React.useMemo(
+  const paths = React.useMemo<GeneratedPath[]>(
     () =>
-      Array.from({ length: 36 }, (_, i) => ({
-        id: i,
-        d: `M-${380 - i * 5 * position} -${189 + i * 6}C-${
-          380 - i * 5 * position
-        } -${189 + i * 6} -${312 - i * 5 * position} ${216 - i * 6} ${
-          152 - i * 5 * position
-        } ${343 - i * 6}C${616 - i * 5 * position} ${470 - i * 6} ${
-          684 - i * 5 * position
-        } ${875 - i * 6} ${684 - i * 5 * position} ${875 - i * 6}`,
-        color: `rgba(15,23,42,${0.1 + i * 0.03})`,
-        width: 0.5 + i * 0.03,
-      })),
+      Array.from({ length: 32 }, (_, i) => {
+        const depth = i / 32;
+        const directional = position >= 0 ? 1 : -1;
+        const startX = -160 + directional * i * 14;
+        const baseY = 40 + i * 8;
+        const amplitude = 46 + depth * 70;
+        const curvature = 120 + depth * 60;
+        const waveOffset = Math.sin((i + 1) * 0.45) * (18 + depth * 20) * directional;
+        const spread = 620 + depth * 40;
+
+        const midX = startX + spread * 0.45;
+        const endX = startX + spread;
+        const endY = baseY + Math.sin(i * 0.32 + directional * 0.6) * (22 + depth * 18);
+
+        const d = [
+          `M ${startX} ${baseY}`,
+          `C ${startX + curvature * 0.55} ${baseY - amplitude - waveOffset}`,
+          `${midX - curvature * 0.2} ${baseY + amplitude * 0.6}`,
+          `${midX} ${baseY}`,
+          `S ${midX + curvature * 0.35} ${baseY - amplitude * 0.65}`,
+          `${endX} ${endY}`,
+        ].join(" ");
+
+        return {
+          id: i,
+          d,
+          opacity: 0.12 + depth * 0.55,
+          width: 0.6 + depth * 1.1,
+          offset: (directional * depth) / 2.4,
+        };
+      }),
     [position]
   );
 
@@ -36,18 +63,24 @@ function FloatingPaths({ position }: { position: number }) {
             key={path.id}
             d={path.d}
             stroke="currentColor"
-            strokeWidth={path.width}
-            strokeOpacity={0.1 + path.id * 0.03}
-            initial={{ pathLength: 0.3, opacity: 0.6 }}
             animate={{
-              pathLength: 1,
-              opacity: [0.3, 0.6, 0.3],
-              pathOffset: [0, 1, 0],
+              pathLength: [0.35, 1, 0.35],
+              opacity: [
+                path.opacity * 0.45,
+                path.opacity,
+                path.opacity * 0.45,
+              ],
+              pathOffset: [0, path.offset, 0],
             }}
+            initial={{ pathLength: 0.2, opacity: path.opacity * 0.4 }}
+            strokeWidth={path.width}
+            strokeOpacity={path.opacity}
+            strokeLinecap="round"
+            strokeLinejoin="round"
             transition={{
-              duration: 20 + Math.random() * 10,
+              duration: 28 + path.id * 0.9,
               repeat: Number.POSITIVE_INFINITY,
-              ease: "linear",
+              ease: "easeInOut",
             }}
           />
         ))}

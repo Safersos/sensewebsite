@@ -121,29 +121,13 @@ export default function AboutPage() {
       <section className="relative">
         <BackgroundPaths title="Sense in Motion">
           <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-12 text-center">
-            <div className="flex w-full flex-col items-center gap-10 lg:hidden">
-              <div className="space-y-6">
-                <p className="text-lg font-semibold text-neutral-900/90 dark:text-white/90">
-                  We accelerate intelligent hardware teams from first sketch to
-                  scaled launch, blending industrial design, firmware, and AI
-                  workflows under a single roof.
-                </p>
-                <p className="text-base text-neutral-800/80 dark:text-white/70">
-                  Our studios craft immersive experiences that make advanced
-                  compute approachable. From co-designing silicon with leading
-                  partners to iterating on in-field telemetry, we remove
-                  friction and give teams confidence to ship beautifully
-                  considered products faster than ever before.
-                </p>
-                <p className="text-base text-neutral-800/80 dark:text-white/70">
-                  Every engagement is grounded in measurable outcomes,
-                  transparent roadmaps, and tooling that keeps stakeholders
-                  aligned — whether they are across the lab or around the globe.
-                </p>
-              </div>
+            <div className="flex w-full items-center justify-center lg:hidden">
               <SphereImageGrid
                 images={HERO_SPHERE_IMAGES}
                 {...SPHERE_CONFIG}
+                containerSize={400}
+                sphereRadius={150}
+                baseImageScale={0.2}
                 className="h-auto w-full max-w-[420px]"
               />
             </div>
