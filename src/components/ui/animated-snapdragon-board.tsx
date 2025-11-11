@@ -123,7 +123,11 @@ export function AnimatedSnapdragonBoard() {
         const radians = (safeTime / 6000) * Math.PI * 2;
         return safePresence * Math.sin(radians) * 8.5;
     });
-    const rotateYWithWobble = useTransform([rotateY, wobble], ([base, wobbleValue]) => base + wobbleValue);
+    const rotateYWithWobble = useTransform([rotateY, wobble], ([base, wobbleValue]) => {
+        const safeBase = typeof base === "number" ? base : 0;
+        const safeWobble = typeof wobbleValue === "number" ? wobbleValue : 0;
+        return safeBase + safeWobble;
+    });
 
     return (
         <motion.div
