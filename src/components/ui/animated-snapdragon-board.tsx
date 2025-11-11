@@ -169,8 +169,11 @@ export function AnimatedSnapdragonBoard() {
         };
     }, []);
 
-    const isLowPowerMode = isCompact || isZoomSuppressed || suppressRemembered;
+    const isLowPowerMode = isZoomSuppressed || suppressRemembered;
     const showFullEffects = !isLowPowerMode;
+
+    const baseCoreSize = isCompact ? CORE_SIZE_COMPACT : CORE_SIZE;
+    const coreSize = isLowPowerMode ? CORE_SIZE_COMPACT : baseCoreSize;
 
     const { scrollYProgress } = useScroll({
         target: boardRef,
@@ -283,10 +286,10 @@ export function AnimatedSnapdragonBoard() {
                 <div
                     className="core-chip absolute"
                     style={{
-                        left: `calc(50% - ${(isLowPowerMode ? CORE_SIZE_COMPACT : CORE_SIZE) / 2}px)`,
-                        top: `calc(50% - ${(isLowPowerMode ? CORE_SIZE_COMPACT : CORE_SIZE) / 2}px)`,
-                        width: isLowPowerMode ? CORE_SIZE_COMPACT : CORE_SIZE,
-                        height: isLowPowerMode ? CORE_SIZE_COMPACT : CORE_SIZE,
+                        left: `calc(50% - ${coreSize / 2}px)`,
+                        top: `calc(50% - ${coreSize / 2}px)`,
+                        width: coreSize,
+                        height: coreSize,
                     }}
                 >
                     {showFullEffects &&
@@ -342,7 +345,7 @@ export function AnimatedSnapdragonBoard() {
                                 animationDelay: `${chip.delay}s`,
                             }}
                         >
-                            {showFullEffects && <div className="chip-card__glow" style={{ background: chip.glowColor }} />}
+                            <div className="chip-card__glow" style={{ background: chip.glowColor }} />
                             <div className="chip-card__body">
                                 <Image
                                     src={chip.image}
