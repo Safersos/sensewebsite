@@ -117,9 +117,11 @@ export function AnimatedSnapdragonBoard() {
         mass: 0.4,
     });
     const time = useTime();
-    const wobble = useTransform([time, wobblePresence], ([t, presence]) => {
-        const radians = (t / 6000) * Math.PI * 2;
-        return presence * Math.sin(radians) * 8.5;
+    const wobble = useTransform([time, wobblePresence], ([timestamp, presence]) => {
+        const safeTime = typeof timestamp === "number" ? timestamp : 0;
+        const safePresence = typeof presence === "number" ? presence : 0;
+        const radians = (safeTime / 6000) * Math.PI * 2;
+        return safePresence * Math.sin(radians) * 8.5;
     });
     const rotateYWithWobble = useTransform([rotateY, wobble], ([base, wobbleValue]) => base + wobbleValue);
 
