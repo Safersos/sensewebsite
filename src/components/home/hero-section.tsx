@@ -25,7 +25,7 @@ export function HeroSection() {
   return (
     <section
       id="home"
-      className="relative flex min-h-screen flex-col items-center justify-start overflow-hidden bg-[radial-gradient(circle_at_bottom,_rgba(79,56,176,0.32),rgba(16,12,45,0.72)_64%)] px-4 pt-28 pb-32 text-white sm:px-8 sm:pt-28 sm:pb-40 md:px-14 lg:px-20 xl:px-24 2xl:px-36"
+      className="relative flex min-h-screen flex-col items-center justify-start overflow-hidden bg-[radial-gradient(circle_at_bottom,_rgba(79,56,176,0.32),rgba(16,12,45,0.72)_64%)] px-4 pt-36 pb-40 text-white sm:px-8 sm:pt-28 sm:pb-40 md:px-14 lg:px-20 xl:px-24 2xl:px-36"
     >
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(140,128,255,0.16),transparent_74%)]" />
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
@@ -44,13 +44,13 @@ export function HeroSection() {
           ))}
         </div>
       </div>
-      <span className="pointer-events-auto absolute left-4 top-[18vh] -translate-y-12 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs uppercase tracking-[0.28em] text-white/70 backdrop-blur-md sm:left-6 sm:top-[14vh] sm:-translate-y-24 sm:text-sm md:hidden">
+      <span className="pointer-events-auto absolute left-4 top-[24vh] -translate-y-8 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs uppercase tracking-[0.28em] text-white/70 backdrop-blur-md sm:left-6 sm:top-[14vh] sm:-translate-y-24 sm:text-sm md:hidden">
         Welcome to Sense
       </span>
       <span className="pointer-events-auto absolute left-6 top-[14vh] hidden -translate-y-14 rounded-full border border-white/15 bg-white/10 px-5 py-2.5 text-sm uppercase tracking-[0.32em] text-white/70 backdrop-blur-md md:block lg:left-12 xl:left-16">
         Welcome to Sense
       </span>
-      <div className="pointer-events-none relative z-10 flex justify-center px-2 pt-14 text-center sm:px-6 sm:pt-10 md:px-10 lg:px-16 xl:px-20">
+      <div className="pointer-events-none relative z-10 flex justify-center px-2 pt-20 text-center sm:px-6 sm:pt-10 md:px-10 lg:px-16 xl:px-20">
         <div className="pointer-events-auto relative mx-auto max-w-4xl select-none text-balance text-center text-white/80">
           <p className="text-[26px] font-semibold uppercase tracking-[0.22em] text-white/25 sm:text-[30px] md:text-[32px] md:leading-tight lg:text-[36px] xl:text-[40px] 2xl:text-[46px]">
             The future of intelligence is

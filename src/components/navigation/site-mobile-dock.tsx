@@ -30,29 +30,42 @@ export function SiteMobileDock() {
                 <span className="sr-only">{item.title}</span>
                 <span
                   className={cn(
-                    "relative flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/8 text-white backdrop-blur transition-colors duration-300",
-                    isActive && "shadow-[0_12px_30px_rgba(115,126,255,0.35)]"
+                    "relative flex h-10 w-10 items-center justify-center rounded-full border border-white/12 bg-white/8 text-white/80 backdrop-blur transition-all duration-300",
+                    isActive && "shadow-[0_14px_32px_rgba(99,102,241,0.25)]"
                   )}
                 >
                   <AnimatePresence>
-                    {isActive && (
-                      <motion.span
-                        layoutId="mobile-dock-active-ring"
-                        className={cn(
-                          "absolute inset-0 rounded-full border border-[#c7d2fe]/70 shadow-[0_0_18px_rgba(129,140,248,0.65)]",
-                          "pointer-events-none"
-                        )}
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: [1, 1.18, 1] }}
-                        exit={{ opacity: 0 }}
-                        transition={{
-                          duration: 2.4,
-                          repeat: Infinity,
-                          repeatType: "mirror",
-                          ease: "easeInOut",
-                        }}
-                      />
-                    )}
+                    {isActive &&
+                      [
+                        <motion.span
+                          key="ring"
+                          layoutId="mobile-dock-active-ring"
+                          className="pointer-events-none absolute inset-0 rounded-full border border-indigo-300/80 shadow-[0_0_14px_rgba(129,140,248,0.55)]"
+                          initial={{ opacity: 0, scale: 0.85 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          exit={{ opacity: 0, scale: 0.9 }}
+                          transition={{ type: "spring", stiffness: 320, damping: 24, mass: 0.65 }}
+                        />,
+                        <motion.span
+                          key="pulse"
+                          className="pointer-events-none absolute inset-0 rounded-full"
+                          style={{
+                            boxShadow: "0 0 0 2px rgba(99, 102, 241, 0.22), 0 0 18px rgba(99, 102, 241, 0.35)",
+                          }}
+                          initial={{ opacity: 0, scale: 0.9 }}
+                          animate={{
+                            opacity: [0.35, 0.75, 0.35],
+                            scale: [1, 1.12, 1],
+                          }}
+                          exit={{ opacity: 0, scale: 0.95 }}
+                          transition={{
+                            duration: 2.8,
+                            repeat: Infinity,
+                            repeatType: "loop",
+                            ease: "easeInOut",
+                          }}
+                        />,
+                      ]}
                   </AnimatePresence>
                   <Icon className="relative z-10 h-[17px] w-[17px]" />
                 </span>

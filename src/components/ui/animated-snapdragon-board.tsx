@@ -124,15 +124,18 @@ export function AnimatedSnapdragonBoard() {
     return (
         <motion.div
             ref={boardRef}
-            className="glass-board group relative mx-auto aspect-square w-full max-w-[320px] sm:max-w-[380px] lg:max-w-[420px] xl:max-w-[460px] 2xl:max-w-[500px]"
-            style={{
-                transformPerspective: 1600,
-                transformStyle: "preserve-3d",
-                rotateX,
-                rotateY: rotateYWithWobble,
-                y: lift,
-            }}
+            className="relative mx-auto aspect-square w-full max-w-[320px] sm:max-w-[380px] lg:max-w-[420px] xl:max-w-[460px] 2xl:max-w-[500px]"
+            style={{ perspective: 1600, y: lift }}
         >
+            <motion.div
+                className="glass-board group relative h-full w-full"
+                style={{
+                    rotateX,
+                    rotateY: rotateYWithWobble,
+                    transformStyle: "preserve-3d",
+                    willChange: "transform",
+                }}
+            >
             <div className="glass-board__texture-wrapper">
                 <Image
                     src={PcbTexture}
@@ -246,6 +249,7 @@ export function AnimatedSnapdragonBoard() {
                     />
                 ))}
             </div>
+            </motion.div>
         </motion.div>
     );
 }
