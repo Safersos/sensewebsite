@@ -99,7 +99,7 @@ const BUBBLE_PARTICLES: BubbleParticle[] = [
 
 export function AnimatedSnapdragonBoard() {
     return (
-        <div className="glass-board group relative mx-auto aspect-square w-full max-w-[420px]">
+        <div className="glass-board group relative mx-auto aspect-square w-full max-w-[320px] sm:max-w-[380px] lg:max-w-[420px] xl:max-w-[460px] 2xl:max-w-[500px]">
             <div className="glass-board__texture-wrapper">
                 <Image
                     src={PcbTexture}
@@ -107,7 +107,7 @@ export function AnimatedSnapdragonBoard() {
                     fill
                     priority
                     className="glass-board__texture"
-                    sizes="(min-width: 768px) 280px, 55vw"
+                    sizes="(min-width: 1536px) 500px, (min-width: 1280px) 460px, (min-width: 1024px) 420px, (min-width: 640px) 380px, 70vw"
                 />
             </div>
             <svg
@@ -162,7 +162,7 @@ export function AnimatedSnapdragonBoard() {
                     fill
                     priority
                     className="core-chip__image"
-                    sizes="(min-width: 768px) 180px, 33vw"
+                    sizes="(min-width: 1536px) 240px, (min-width: 1280px) 220px, (min-width: 1024px) 190px, (min-width: 640px) 170px, 38vw"
                 />
                 <div className="core-chip__frame" />
                 <div className="core-chip__glass" />

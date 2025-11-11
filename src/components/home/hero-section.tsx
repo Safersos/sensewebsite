@@ -22,12 +22,18 @@ export function HeroSection() {
     { top: "62%", left: "50%", duration: "6.8s", delay: "-3.1s" },
     { top: "48%", left: "5%", duration: "5.6s", delay: "-2.6s" },
     { top: "15%", left: "88%", duration: "6.4s", delay: "-1.4s" },
+    { top: "72%", left: "12%", duration: "6.7s", delay: "-5.1s" },
+    { top: "82%", left: "40%", duration: "6.1s", delay: "-3.9s" },
+    { top: "88%", left: "68%", duration: "5.9s", delay: "-4.4s" },
+    { top: "94%", left: "32%", duration: "6.8s", delay: "-6.2s" },
+    { top: "86%", left: "78%", duration: "6.3s", delay: "-5.8s" },
+    { top: "76%", left: "55%", duration: "5.7s", delay: "-4.6s" },
   ];
 
   return (
     <section
       id="home"
-      className="relative flex min-h-[120vh] flex-col items-center justify-start overflow-hidden bg-[radial-gradient(circle_at_bottom,_rgba(79,56,176,0.32),rgba(16,12,45,0.72)_64%)] px-6 py-32 pb-48 text-white md:px-16 lg:px-24"
+      className="relative flex min-h-screen flex-col items-center justify-start overflow-hidden bg-[radial-gradient(circle_at_bottom,_rgba(79,56,176,0.32),rgba(16,12,45,0.72)_64%)] px-4 py-28 pb-40 text-white sm:px-8 md:px-14 lg:px-20 xl:px-24 2xl:px-36"
     >
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(140,128,255,0.16),transparent_74%)]" />
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
@@ -46,38 +52,38 @@ export function HeroSection() {
           ))}
         </div>
       </div>
-      <span className="pointer-events-auto absolute left-4 top-[16vh] hidden -translate-y-14 rounded-full border border-white/15 bg-white/10 px-5 py-2.5 text-sm uppercase tracking-[0.32em] text-white/70 backdrop-blur-md md:block lg:left-10">
+      <span className="pointer-events-auto absolute left-6 top-[16vh] hidden -translate-y-14 rounded-full border border-white/15 bg-white/10 px-5 py-2.5 text-sm uppercase tracking-[0.32em] text-white/70 backdrop-blur-md md:block lg:left-12 xl:left-16">
         Welcome to Sense
       </span>
-      <div className="pointer-events-none relative z-10 flex justify-center px-6 pt-10 text-center md:px-16 lg:px-24">
+      <div className="pointer-events-none relative z-10 flex justify-center px-4 pt-12 text-center sm:px-6 md:px-10 lg:px-16 xl:px-20">
         <div className="pointer-events-auto relative mx-auto max-w-5xl select-none text-balance text-center text-white/80">
-          <p className="text-3xl font-semibold leading-tight text-white/25 sm:text-4xl md:text-6xl">
+          <p className="text-xl font-semibold uppercase tracking-[0.18em] text-white/25 sm:text-2xl lg:text-[34px] lg:leading-tight xl:text-[40px] 2xl:text-[46px]">
             The future of intelligence is
           </p>
-          <div className="mt-5 flex flex-wrap items-center justify-center gap-4 text-4xl font-semibold text-white sm:text-5xl md:text-6xl">
-            <span className="fingerprint-glow inline-flex h-14 w-14 items-center justify-center rounded-full border border-emerald-300/50 bg-emerald-400/10 sm:h-16 sm:w-16">
-              <Fingerprint className="h-8 w-8 sm:h-9 sm:w-9" />
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-3 text-2xl font-semibold text-white sm:text-3xl md:gap-5 md:text-4xl xl:text-5xl">
+            <span className="fingerprint-glow inline-flex h-11 w-11 items-center justify-center rounded-full border border-emerald-300/50 bg-emerald-400/10 sm:h-12 sm:w-12 xl:h-14 xl:w-14">
+              <Fingerprint className="h-6 w-6 sm:h-7 sm:w-7 xl:h-8 xl:w-8" />
             </span>
-            <span>human</span>
+            <span>HUMAN</span>
             <span className="text-white/60">+</span>
-            <span className="ai-glow inline-flex h-14 w-14 items-center justify-center rounded-full border border-cyan-300/40 bg-cyan-400/10 sm:h-16 sm:w-16">
-              <Sparkles className="h-8 w-8 sm:h-9 sm:w-9" />
+            <span className="ai-glow inline-flex h-11 w-11 items-center justify-center rounded-full border border-cyan-300/40 bg-cyan-400/10 sm:h-12 sm:w-12 xl:h-14 xl:w-14">
+              <Sparkles className="h-6 w-6 sm:h-7 sm:w-7 xl:h-8 xl:w-8" />
             </span>
             <span>AI</span>
           </div>
         </div>
       </div>
-      <div className="relative z-10 mt-14 w-full max-w-4xl overflow-hidden rounded-[32px] border border-white/10 bg-white/5 p-6 text-center shadow-[0_20px_60px_rgba(10,8,30,0.45)] backdrop-blur-xl">
-        <div className="relative mx-auto h-56 w-full max-w-3xl">
+      <div className="relative z-10 mt-12 w-full max-w-3xl overflow-hidden rounded-[28px] border border-white/10 bg-white/5 p-5 text-center shadow-[0_18px_50px_rgba(10,8,30,0.45)] backdrop-blur-xl sm:mt-16 lg:mt-20 lg:p-6 xl:max-w-4xl">
+        <div className="relative mx-auto h-48 w-full max-w-lg lg:h-52 xl:h-56 xl:max-w-xl">
           <CpuArchitecture className="h-full w-full text-white/95" />
         </div>
       </div>
-      <div className="relative z-10 mt-24 flex w-full max-w-5xl flex-col items-center text-center">
+      <div className="relative z-10 mt-24 flex w-full max-w-6xl flex-col items-center text-center lg:mt-28 xl:mt-32">
         <div className="relative flex w-full max-w-2xl flex-col items-center">
-          <div className="h-[68px] w-full">
+          <div className="h-[40px] w-full sm:h-[48px] lg:h-[54px] xl:h-[60px]">
             <TextParticle
               text="Sense is your real world Jarvis"
-              fontSize={32}
+              fontSize={26}
               fontFamily='"Helvetica Neue", Helvetica, Arial, sans-serif'
               particleSize={1}
               particleDensity={1}
@@ -86,29 +92,29 @@ export function HeroSection() {
             />
           </div>
         </div>
-        <div className="relative mt-0 w-full max-w-2xl">
-          <div className="relative mx-auto flex w-full max-w-[420px] items-center justify-center">
+        <div className="relative mt-[-14px] w-full max-w-xl sm:mt-[-18px]">
+          <div className="relative mx-auto flex w-full max-w-[360px] items-center justify-center sm:max-w-[420px] lg:max-w-[460px] xl:max-w-[520px] 2xl:max-w-[560px]">
             <Image
               src={PodGif}
               alt="Sense pod animation"
               priority
               unoptimized
-              className="w-full max-w-[420px] drop-shadow-[0_30px_60px_rgba(10,8,30,0.55)]"
+              className="w-full max-w-[360px] drop-shadow-[0_30px_60px_rgba(10,8,30,0.55)] sm:max-w-[420px] lg:max-w-[460px] xl:max-w-[520px] 2xl:max-w-[560px]"
             />
           </div>
         </div>
-        <div className="relative mt-14 flex w-full max-w-4xl flex-col items-center px-6 text-white/80">
-          <span className="text-xs uppercase tracking-[0.32em] text-white/50">
+        <div className="relative mt-6 flex w-full max-w-4xl flex-col items-center px-4 text-white/80 sm:mt-8 sm:px-6 lg:mt-10">
+          <span className="text-xs uppercase tracking-[0.32em] text-white/50 sm:text-sm">
             Snapdragon 8 Elite Core
           </span>
-          <h3 className="mt-6 text-2xl font-semibold text-white">
+          <h3 className="mt-6 text-2xl font-semibold text-white sm:text-3xl lg:text-[34px]">
             Powering Sense with Qualcomm Precision
           </h3>
-          <p className="mt-3 max-w-2xl text-sm text-white/60">
+          <p className="mt-3 max-w-2xl text-sm text-white/60 sm:text-base lg:max-w-3xl lg:text-lg">
             Snapdragon silicon orchestrates every biometric, haptic, and neural routine inside Sense, working in harmony
             with Samsung memory and Qualcomm power management.
           </p>
-          <div className="relative mt-8 w-full">
+          <div className="relative mt-10 w-full lg:mt-14">
             <AnimatedSnapdragonBoard />
           </div>
         </div>
