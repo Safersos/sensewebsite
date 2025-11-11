@@ -73,7 +73,7 @@ export function HeroSection() {
         style={{ y: introDrift }}
       >
         <div className="pointer-events-auto relative mx-auto max-w-4xl select-none text-balance text-center text-white/80">
-          <p className="text-[26px] font-semibold uppercase tracking-[0.22em] text-white/25 sm:text-[30px] md:text-[32px] md:leading-tight lg:text-[36px] xl:text-[40px] 2xl:text-[46px]">
+          <p className="text-[30px] font-semibold uppercase tracking-[0.22em] text-white/25 sm:text-[30px] md:text-[32px] md:leading-tight lg:text-[36px] xl:text-[40px] 2xl:text-[46px]">
             The future of intelligence is
           </p>
           <div className="mt-5 flex flex-wrap items-center justify-center gap-3 text-2xl font-semibold text-white sm:text-3xl md:gap-5 md:text-4xl xl:text-5xl">
