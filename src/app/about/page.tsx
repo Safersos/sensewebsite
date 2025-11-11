@@ -120,31 +120,42 @@ export default function AboutPage() {
     <main className="relative bg-neutral-950 text-white">
       <section className="relative">
         <BackgroundPaths title="Sense in Motion">
-          <div className="mx-auto flex max-w-6xl flex-col items-center gap-12 text-center lg:flex-row lg:items-start lg:text-left">
-            <div className="flex-1 space-y-6">
-              <p className="text-lg font-semibold text-neutral-900/90 dark:text-white/90">
-                We accelerate intelligent hardware teams from first sketch to
-                scaled launch, blending industrial design, firmware, and AI
-                workflows under a single roof.
-              </p>
-              <p className="text-base text-neutral-800/80 dark:text-white/70">
-                Our studios craft immersive experiences that make advanced
-                compute approachable. From co-designing silicon with leading
-                partners to iterating on in-field telemetry, we remove friction
-                and give teams confidence to ship beautifully considered
-                products faster than ever before.
-              </p>
-              <p className="text-base text-neutral-800/80 dark:text-white/70">
-                Every engagement is grounded in measurable outcomes, transparent
-                roadmaps, and tooling that keeps stakeholders aligned — whether
-                they are across the lab or around the globe.
-              </p>
-            </div>
-            <div className="relative flex justify-center lg:flex-1">
+          <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-12 text-center">
+            <div className="flex w-full flex-col items-center gap-10 lg:hidden">
+              <div className="space-y-6">
+                <p className="text-lg font-semibold text-neutral-900/90 dark:text-white/90">
+                  We accelerate intelligent hardware teams from first sketch to
+                  scaled launch, blending industrial design, firmware, and AI
+                  workflows under a single roof.
+                </p>
+                <p className="text-base text-neutral-800/80 dark:text-white/70">
+                  Our studios craft immersive experiences that make advanced
+                  compute approachable. From co-designing silicon with leading
+                  partners to iterating on in-field telemetry, we remove
+                  friction and give teams confidence to ship beautifully
+                  considered products faster than ever before.
+                </p>
+                <p className="text-base text-neutral-800/80 dark:text-white/70">
+                  Every engagement is grounded in measurable outcomes,
+                  transparent roadmaps, and tooling that keeps stakeholders
+                  aligned — whether they are across the lab or around the globe.
+                </p>
+              </div>
               <SphereImageGrid
                 images={HERO_SPHERE_IMAGES}
                 {...SPHERE_CONFIG}
                 className="h-auto w-full max-w-[420px]"
+              />
+            </div>
+
+            <div className="hidden w-full items-center justify-center lg:flex">
+              <SphereImageGrid
+                images={HERO_SPHERE_IMAGES}
+                {...SPHERE_CONFIG}
+                containerSize={540}
+                sphereRadius={190}
+                baseImageScale={0.2}
+                className="h-auto w-full max-w-[560px]"
               />
             </div>
           </div>
