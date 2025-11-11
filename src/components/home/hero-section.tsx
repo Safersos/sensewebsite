@@ -52,7 +52,7 @@ export function HeroSection() {
           ))}
         </div>
       </div>
-      <span className="pointer-events-auto absolute left-4 top-[14vh] -translate-y-12 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs uppercase tracking-[0.28em] text-white/70 backdrop-blur-md sm:left-6 sm:text-sm md:hidden">
+      <span className="pointer-events-auto absolute left-4 top-[18vh] -translate-y-16 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs uppercase tracking-[0.28em] text-white/70 backdrop-blur-md sm:left-6 sm:text-sm md:hidden">
         Welcome to Sense
       </span>
       <span className="pointer-events-auto absolute left-6 top-[16vh] hidden -translate-y-14 rounded-full border border-white/15 bg-white/10 px-5 py-2.5 text-sm uppercase tracking-[0.32em] text-white/70 backdrop-blur-md md:block lg:left-12 xl:left-16">
@@ -60,7 +60,7 @@ export function HeroSection() {
       </span>
       <div className="pointer-events-none relative z-10 flex justify-center px-2 pt-10 text-center sm:px-6 md:px-10 lg:px-16 xl:px-20">
         <div className="pointer-events-auto relative mx-auto max-w-4xl select-none text-balance text-center text-white/80">
-          <p className="text-xl font-semibold uppercase tracking-[0.22em] text-white/25 sm:text-2xl lg:text-[34px] lg:leading-tight xl:text-[40px] 2xl:text-[46px]">
+          <p className="text-[22px] font-semibold uppercase tracking-[0.22em] text-white/25 sm:text-3xl lg:text-[34px] lg:leading-tight xl:text-[40px] 2xl:text-[46px]">
             The future of intelligence is
           </p>
           <div className="mt-5 flex flex-wrap items-center justify-center gap-3 text-2xl font-semibold text-white sm:text-3xl md:gap-5 md:text-4xl xl:text-5xl">
