@@ -18,7 +18,6 @@ export function SiteMobileDock() {
             const isActive =
               pathname === item.href ||
               (item.href !== "/" && pathname.startsWith(item.href));
-            const isOrder = item.title === "Order";
 
             return (
               <Link
@@ -26,16 +25,13 @@ export function SiteMobileDock() {
                 href={item.href}
                 aria-label={item.title}
                 aria-current={isActive ? "page" : undefined}
-                className={cn(
-                  "group relative flex flex-1 items-center justify-center text-white/70 transition-transform duration-200 ease-out",
-                  isOrder ? "translate-y-[-6px] flex-[1.15]" : "flex-[1]"
-                )}
+                className="group relative flex flex-1 items-center justify-center text-white/70 transition-transform duration-200 ease-out"
               >
                 <span className="sr-only">{item.title}</span>
                 <span
                   className={cn(
-                    "relative flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 backdrop-blur",
-                    isOrder && "h-11 w-11 rounded-[22px] border-white/20 bg-white text-neutral-900 shadow-[0_10px_28px_rgba(10,10,30,0.32)]"
+                    "relative flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/6 backdrop-blur transition-colors duration-200",
+                    isActive ? "bg-white text-neutral-900 shadow-[0_10px_28px_rgba(10,10,30,0.28)]" : "text-white"
                   )}
                 >
                   <AnimatePresence>
@@ -44,7 +40,7 @@ export function SiteMobileDock() {
                         layoutId="mobile-dock-active-ring"
                         className={cn(
                           "absolute inset-0 rounded-full border border-[#a5b4fc] shadow-[0_0_14px_rgba(129,140,248,0.55)]",
-                          isOrder ? "scale-105" : "scale-110"
+                          "scale-110"
                         )}
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
@@ -53,12 +49,7 @@ export function SiteMobileDock() {
                       />
                     )}
                   </AnimatePresence>
-                  <Icon
-                    className={cn(
-                      "relative z-10 h-[17px] w-[17px]",
-                      isOrder ? "text-neutral-900" : "text-white"
-                    )}
-                  />
+                  <Icon className="relative z-10 h-[17px] w-[17px]" />
                 </span>
               </Link>
             );

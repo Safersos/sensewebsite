@@ -27,6 +27,17 @@ const playfairDisplay = Playfair_Display({
 export const metadata: Metadata = {
   title: "Home | Sense",
   description: "Sense — a new frontier for motion-led product design.",
+  manifest: "/manifest.webmanifest",
+  themeColor: "#04020D",
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/favicon.ico",
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "Sense",
+  },
 };
 
 export default function RootLayout({
