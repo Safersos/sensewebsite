@@ -76,16 +76,16 @@ export function HeroSection() {
           <p className="text-[30px] font-semibold uppercase tracking-[0.22em] text-white/25 sm:text-[30px] md:text-[32px] md:leading-tight lg:text-[36px] xl:text-[40px] 2xl:text-[46px]">
             The future of intelligence is
           </p>
-          <div className="mt-5 flex flex-wrap items-center justify-center gap-3 text-2xl font-semibold text-white sm:text-3xl md:gap-5 md:text-4xl xl:text-5xl">
-            <span className="fingerprint-glow inline-flex h-10 w-10 items-center justify-center rounded-full border border-emerald-300/50 bg-emerald-400/10 sm:h-12 sm:w-12 xl:h-14 xl:w-14">
-              <Fingerprint className="h-6 w-6 sm:h-7 sm:w-7 xl:h-8 xl:w-8" />
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-3 text-[28px] font-semibold text-white sm:text-3xl md:gap-5 md:text-4xl xl:text-5xl">
+            <span className="fingerprint-glow inline-flex h-12 w-12 items-center justify-center rounded-full border border-emerald-300/50 bg-emerald-400/10 sm:h-12 sm:w-12 xl:h-14 xl:w-14">
+              <Fingerprint className="h-7 w-7 sm:h-7 sm:w-7 xl:h-8 xl:w-8" />
             </span>
-            <span className="text-sm tracking-[0.32em] text-white/80 sm:text-base md:text-lg">HUMAN</span>
+            <span className="text-base tracking-[0.32em] text-white/80 sm:text-base md:text-lg">HUMAN</span>
             <span className="text-white/60">+</span>
-            <span className="ai-glow inline-flex h-10 w-10 items-center justify-center rounded-full border border-cyan-300/40 bg-cyan-400/10 sm:h-12 sm:w-12 xl:h-14 xl:w-14">
-              <Sparkles className="h-6 w-6 sm:h-7 sm:w-7 xl:h-8 xl:w-8" />
+            <span className="ai-glow inline-flex h-12 w-12 items-center justify-center rounded-full border border-cyan-300/40 bg-cyan-400/10 sm:h-12 sm:w-12 xl:h-14 xl:w-14">
+              <Sparkles className="h-7 w-7 sm:h-7 sm:w-7 xl:h-8 xl:w-8" />
             </span>
-            <span className="text-sm tracking-[0.32em] text-white/80 sm:text-base md:text-lg">AI</span>
+            <span className="text-base tracking-[0.32em] text-white/80 sm:text-base md:text-lg">AI</span>
           </div>
         </div>
       </motion.div>
