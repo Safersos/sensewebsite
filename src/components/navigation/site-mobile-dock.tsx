@@ -30,8 +30,8 @@ export function SiteMobileDock() {
                 <span className="sr-only">{item.title}</span>
                 <span
                   className={cn(
-                    "relative flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/6 backdrop-blur transition-colors duration-200",
-                    isActive ? "bg-white text-neutral-900 shadow-[0_10px_28px_rgba(10,10,30,0.28)]" : "text-white"
+                    "relative flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/8 text-white backdrop-blur transition-colors duration-300",
+                    isActive && "shadow-[0_12px_30px_rgba(115,126,255,0.35)]"
                   )}
                 >
                   <AnimatePresence>
@@ -39,13 +39,18 @@ export function SiteMobileDock() {
                       <motion.span
                         layoutId="mobile-dock-active-ring"
                         className={cn(
-                          "absolute inset-0 rounded-full border border-[#a5b4fc] shadow-[0_0_14px_rgba(129,140,248,0.55)]",
-                          "scale-110"
+                          "absolute inset-0 rounded-full border border-[#c7d2fe]/70 shadow-[0_0_18px_rgba(129,140,248,0.65)]",
+                          "pointer-events-none"
                         )}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: [1, 1.18, 1] }}
                         exit={{ opacity: 0 }}
-                        transition={{ type: "spring", stiffness: 340, damping: 22, mass: 0.6 }}
+                        transition={{
+                          duration: 2.4,
+                          repeat: Infinity,
+                          repeatType: "mirror",
+                          ease: "easeInOut",
+                        }}
                       />
                     )}
                   </AnimatePresence>
