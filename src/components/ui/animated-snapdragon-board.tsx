@@ -1,6 +1,7 @@
 "use client";
 
 import Image, { type StaticImageData } from "next/image";
+import { type CSSProperties } from "react";
 
 import SnapdragonCenter from "../../../assets/snapdragon.png";
 import SamsungLpddr from "../../../assets/LPDDR5.png";
@@ -18,6 +19,16 @@ type ChipSpec = {
     y: number; // 0 - 1 (percentage of board height)
     delay: number;
     glowColor: string;
+};
+
+type BubbleParticle = {
+  tx: number;
+  ty: number;
+  bounceTx: number;
+  bounceTy: number;
+  size: number;
+  delay: number;
+  duration: number;
 };
 
 const CHIP_SPECS: ChipSpec[] = [
@@ -66,6 +77,25 @@ const CHIP_SPECS: ChipSpec[] = [
 const BOARD_DIMENSION = 400;
 const CORE_SIZE = 108;
 const CORE_SCALE = (CORE_SIZE / BOARD_DIMENSION) * 100;
+
+const BUBBLE_PARTICLES: BubbleParticle[] = [
+  { tx: -100, ty: -120, bounceTx: -160, bounceTy: -40, size: 12, delay: 0, duration: 4 },
+  { tx: -150, ty: -20, bounceTx: -80, bounceTy: 60, size: 10, delay: 0.5, duration: 4.2 },
+  { tx: -60, ty: -140, bounceTx: 10, bounceTy: -180, size: 13, delay: 1, duration: 4.4 },
+  { tx: 90, ty: -120, bounceTx: 150, bounceTy: -40, size: 11, delay: 0.8, duration: 4 },
+  { tx: 150, ty: -50, bounceTx: 200, bounceTy: 20, size: 12, delay: 1.2, duration: 4.6 },
+  { tx: 180, ty: 40, bounceTx: 120, bounceTy: 120, size: 10, delay: 1.6, duration: 4.3 },
+  { tx: 120, ty: 130, bounceTx: 40, bounceTy: 180, size: 12, delay: 2, duration: 4.1 },
+  { tx: 50, ty: 170, bounceTx: -30, bounceTy: 140, size: 9, delay: 2.5, duration: 4.5 },
+  { tx: -70, ty: 160, bounceTx: -150, bounceTy: 110, size: 11, delay: 1.8, duration: 4.2 },
+  { tx: -150, ty: 90, bounceTx: -90, bounceTy: 10, size: 12, delay: 2.1, duration: 4.8 },
+  { tx: -110, ty: -40, bounceTx: -30, bounceTy: -100, size: 9, delay: 2.6, duration: 4.4 },
+  { tx: 40, ty: -160, bounceTx: 120, bounceTy: -120, size: 10, delay: 3, duration: 4.6 },
+  { tx: 180, ty: -10, bounceTx: 120, bounceTy: -80, size: 8, delay: 1.4, duration: 4.1 },
+  { tx: 110, ty: 80, bounceTx: 40, bounceTy: 30, size: 9, delay: 0.9, duration: 4.3 },
+  { tx: -20, ty: 150, bounceTx: 60, bounceTy: 110, size: 8, delay: 2.8, duration: 4.5 },
+  { tx: -170, ty: -90, bounceTx: -120, bounceTy: -10, size: 10, delay: 3.3, duration: 4.7 },
+];
 
 export function AnimatedSnapdragonBoard() {
     return (
@@ -122,19 +152,7 @@ export function AnimatedSnapdragonBoard() {
                     ))}
                 </g>
 
-                <g className="node-group">
-                    {NODE_POSITIONS.map((node, index) => (
-                        <circle
-                            key={`node-${index}`}
-                            className="trace-node"
-                            cx={node.x}
-                            cy={node.y}
-                            r="7"
-                            style={{ animationDelay: `${index * 0.35}s` }}
-                        />
-                    ))}
-                </g>
-            </svg>
+      </svg>
 
             <div className="core-chip absolute" style={{ left: `calc(50% - ${CORE_SIZE / 2}px)`, top: `calc(50% - ${CORE_SIZE / 2}px)`, width: CORE_SIZE, height: CORE_SIZE }}>
                 <div className="core-chip__glow" />
@@ -177,6 +195,24 @@ export function AnimatedSnapdragonBoard() {
                     </div>
                 </div>
             ))}
+
+            <div className="floating-bubbles">
+                {BUBBLE_PARTICLES.map((bubble, index) => (
+                    <span
+                        key={`bubble-${index}`}
+                        className="bubble-particle"
+                        style={{
+                            animationDelay: `${bubble.delay}s`,
+                            animationDuration: `${bubble.duration}s`,
+                            "--tx": `${bubble.tx}px`,
+                            "--ty": `${bubble.ty}px`,
+                            "--bounce-tx": `${bubble.bounceTx}px`,
+                            "--bounce-ty": `${bubble.bounceTy}px`,
+                            "--bubble-size": `${bubble.size}px`,
+                        } as CSSProperties}
+                    />
+                ))}
+            </div>
         </div>
     );
 }
@@ -189,26 +225,9 @@ const HOLES = [
 ];
 
 const TRACES: string[] = [
-    "M200 200 C182 174 156 148 108 110",
-    "M200 200 C226 176 254 150 304 120",
+    "M200 200 C184 174 154 146 108 110",
+    "M200 200 C224 176 254 150 304 120",
     "M200 200 C236 214 266 226 320 240",
     "M200 200 C172 236 150 258 112 284",
-];
-
-const NODE_POSITIONS = [
-    { x: 108, y: 110 },
-    { x: 140, y: 140 },
-    { x: 172, y: 170 },
-    { x: 304, y: 120 },
-    { x: 268, y: 150 },
-    { x: 238, y: 178 },
-    { x: 320, y: 240 },
-    { x: 284, y: 260 },
-    { x: 248, y: 278 },
-    { x: 112, y: 284 },
-    { x: 146, y: 264 },
-    { x: 174, y: 242 },
-    { x: 200, y: 124 },
-    { x: 200, y: 292 },
 ];
 

@@ -306,13 +306,8 @@
     stroke-dashoffset: 320;
     animation: trace-flow 4.4s ease-in-out infinite;
     filter:
-      drop-shadow(0 0 16px rgba(250, 204, 21, 0.45)) drop-shadow(0 0 28px rgba(251, 191, 36, 0.25));
-  }
-
-  .glass-board .trace-node {
-    fill: url(#node-glow);
-    opacity: 0;
-    animation: node-pulse 4.4s ease-in-out infinite;
+      drop-shadow(0 0 16px rgba(250, 204, 21, 0.45))
+      drop-shadow(0 0 28px rgba(251, 191, 36, 0.25));
   }
 
   .glass-board .core-chip {
@@ -438,22 +433,30 @@
     }
   }
 
-  @keyframes node-pulse {
+  @keyframes bubble-burst {
+    0% {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0);
+    }
 
-    0%,
+    20% {
+      opacity: 0.95;
+      transform: translate(-50%, -50%) scale(0.6);
+    }
+
+    55% {
+      opacity: 0.9;
+      transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1);
+    }
+
+    80% {
+      opacity: 0.7;
+      transform: translate(calc(-50% + var(--bounce-tx)), calc(-50% + var(--bounce-ty))) scale(0.7);
+    }
+
     100% {
       opacity: 0;
-      transform: scale(0.4);
-    }
-
-    35% {
-      opacity: 0.85;
-      transform: scale(1);
-    }
-
-    70% {
-      opacity: 0.25;
-      transform: scale(1.4);
+      transform: translate(calc(-50% + var(--bounce-tx)), calc(-50% + var(--bounce-ty))) scale(0.2);
     }
   }
 
@@ -522,6 +525,27 @@
   filter: saturate(0.9) contrast(1.1);
   mix-blend-mode: screen;
   pointer-events: none;
+}
+
+.floating-bubbles {
+  position: absolute;
+  inset: 10%;
+  border-radius: 36px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.bubble-particle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--bubble-size, 12px);
+  height: var(--bubble-size, 12px);
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(165, 243, 252, 0.95), rgba(59, 130, 246, 0));
+  filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.6));
+  transform: translate(-50%, -50%) scale(0);
+  animation: bubble-burst 4.4s ease-in-out infinite;
 }
 
 .splash-screen {

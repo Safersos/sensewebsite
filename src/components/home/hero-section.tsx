@@ -86,7 +86,7 @@ export function HeroSection() {
             />
           </div>
         </div>
-        <div className="relative mt-6 w-full max-w-3xl">
+        <div className="relative mt-2 w-full max-w-3xl">
           <div className="relative mx-auto flex w-full max-w-xl items-center justify-center">
             <Image
               src={PodGif}
