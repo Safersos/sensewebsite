@@ -90,10 +90,10 @@ export function HeroSection() {
         </div>
       </motion.div>
       <motion.div
-        className="relative z-10 mt-10 w-full max-w-3xl overflow-hidden rounded-[24px] border border-white/10 bg-white/5 p-5 text-center shadow-[0_18px_50px_rgba(10,8,30,0.45)] backdrop-blur-xl sm:mt-16 lg:mt-20 lg:p-6 xl:max-w-4xl"
+        className="relative z-10 mt-10 w-full max-w-3xl overflow-hidden rounded-[24px] border border-white/10 bg-white/5 p-5 text-center shadow-[0_18px_50px_rgba(10,8,30,0.45)] backdrop-blur-xl sm:mt-16 lg:mt-14 lg:p-6 xl:mt-16 xl:max-w-[900px]"
         style={{ y: corePanelDrift }}
       >
-        <div className="relative mx-auto h-44 w-full max-w-md sm:h-48 sm:max-w-lg lg:h-52 xl:h-56 xl:max-w-xl">
+        <div className="relative mx-auto h-44 w-full max-w-md sm:h-48 sm:max-w-lg lg:h-48 lg:max-w-[460px] xl:h-50 xl:max-w-[520px]">
           <CpuArchitecture className="h-full w-full text-white/95" />
         </div>
       </motion.div>

@@ -31,13 +31,13 @@ type ChipSpec = {
 };
 
 type BubbleParticle = {
-  tx: number;
-  ty: number;
-  bounceTx: number;
-  bounceTy: number;
-  size: number;
-  delay: number;
-  duration: number;
+    tx: number;
+    ty: number;
+    bounceTx: number;
+    bounceTy: number;
+    size: number;
+    delay: number;
+    duration: number;
 };
 
 const CHIP_SPECS: ChipSpec[] = [
@@ -51,10 +51,10 @@ const CHIP_SPECS: ChipSpec[] = [
         delay: 0.45,
         glowColor: "rgba(59, 130, 246, 0.35)",
         sm: {
-            x: 0.26,
-            y: 0.22,
+            x: 0.30,
+            y: 0.26,
             width: 76,
-            height: 54,
+            height: 52,
         },
     },
     {
@@ -67,10 +67,10 @@ const CHIP_SPECS: ChipSpec[] = [
         delay: 0.85,
         glowColor: "rgba(249, 115, 22, 0.38)",
         sm: {
-            x: 0.80,
+            x: 0.76,
             y: 0.36,
-            width: 72,
-            height: 49,
+            width: 70,
+            height: 48,
         },
     },
     {
@@ -85,7 +85,7 @@ const CHIP_SPECS: ChipSpec[] = [
         sm: {
             x: 0.76,
             y: 0.68,
-            width: 76,
+            width: 74,
             height: 50,
         },
     },
@@ -99,17 +99,16 @@ const CHIP_SPECS: ChipSpec[] = [
         delay: 1.55,
         glowColor: "rgba(96, 165, 250, 0.32)",
         sm: {
-            x: 0.33,
-            y: 0.78,
-            width: 74,
+            x: 0.36,
+            y: 0.79,
+            width: 72,
             height: 50,
         },
     },
 ];
 
 const BOARD_DIMENSION = 400;
-const CORE_SIZE = 108;
-const CORE_SCALE = (CORE_SIZE / BOARD_DIMENSION) * 100;
+const CORE_SIZE = 118;
 const CORE_SIZE_COMPACT = 96;
 
 const BUBBLE_PARTICLES: BubbleParticle[] = [
@@ -138,6 +137,7 @@ export function AnimatedSnapdragonBoard() {
     const [isCompact, setIsCompact] = useState(false);
     const [isZoomSuppressed, setIsZoomSuppressed] = useState(false);
     const [suppressRemembered, setSuppressRemembered] = useState(false);
+
     useEffect(() => {
         if (typeof window === "undefined") {
             return;
@@ -146,10 +146,9 @@ export function AnimatedSnapdragonBoard() {
         const updateMatch = () => setIsCompact(mediaQuery.matches);
         updateMatch();
         mediaQuery.addEventListener("change", updateMatch);
-        return () => {
-            mediaQuery.removeEventListener("change", updateMatch);
-        };
+        return () => mediaQuery.removeEventListener("change", updateMatch);
     }, []);
+
     useEffect(() => {
         if (typeof window === "undefined" || !window.visualViewport) {
             return;
@@ -169,7 +168,10 @@ export function AnimatedSnapdragonBoard() {
             visualViewport.removeEventListener("scroll", handleZoom);
         };
     }, []);
+
     const isLowPowerMode = isCompact || isZoomSuppressed || suppressRemembered;
+    const showFullEffects = !isLowPowerMode;
+
     const { scrollYProgress } = useScroll({
         target: boardRef,
         offset: ["start 92%", "end 8%"],
@@ -201,10 +203,7 @@ export function AnimatedSnapdragonBoard() {
         <motion.div
             ref={boardRef}
             className="relative mx-auto aspect-square w-full max-w-[320px] sm:max-w-[380px] lg:max-w-[420px] xl:max-w-[460px] 2xl:max-w-[500px]"
-            style={{
-                perspective: isLowPowerMode ? 1100 : 1600,
-                y: isLowPowerMode ? 0 : lift,
-            }}
+            style={{ perspective: isLowPowerMode ? 1100 : 1600, y: isLowPowerMode ? 0 : lift }}
         >
             <motion.div
                 className={`glass-board group relative h-full w-full${isLowPowerMode ? " is-low-power" : ""}`}
@@ -215,159 +214,150 @@ export function AnimatedSnapdragonBoard() {
                     willChange: "transform",
                 }}
             >
-            <div className="glass-board__texture-wrapper">
-                <Image
-                    src={PcbTexture}
-                    alt="PCB substrate"
-                    fill
-                    priority
-                    className="glass-board__texture"
-                    sizes="(min-width: 1536px) 500px, (min-width: 1280px) 460px, (min-width: 1024px) 420px, (min-width: 640px) 380px, 70vw"
-                />
-            </div>
-            <svg
-                viewBox="0 0 400 400"
-                xmlns="http://www.w3.org/2000/svg"
-                aria-hidden="true"
-                className="absolute inset-0 h-full w-full"
-            >
-                <defs>
-                    <linearGradient id="board-gradient" x1="15%" y1="0%" x2="85%" y2="100%">
-                        <stop offset="0%" stopColor="rgba(148, 163, 184, 0.18)" />
-                        <stop offset="45%" stopColor="rgba(51, 65, 85, 0.08)" />
-                        <stop offset="100%" stopColor="rgba(15, 23, 42, 0.5)" />
-                    </linearGradient>
-                    <radialGradient id="node-glow" cx="50%" cy="50%" r="50%">
-                        <stop offset="0%" stopColor="rgba(248, 250, 252, 1)" />
-                        <stop offset="100%" stopColor="rgba(14, 165, 233, 0)" />
-                    </radialGradient>
-                </defs>
+                <div className="glass-board__texture-wrapper">
+                    <Image
+                        src={PcbTexture}
+                        alt="PCB substrate"
+                        fill
+                        priority
+                        className="glass-board__texture"
+                        sizes="(min-width: 1536px) 500px, (min-width: 1280px) 460px, (min-width: 1024px) 420px, (min-width: 640px) 380px, 70vw"
+                    />
+                </div>
 
-                <rect
-                    x="22"
-                    y="22"
-                    width="356"
-                    height="356"
-                    rx="42"
-                    fill="url(#board-gradient)"
-                    className="board-surface"
-                />
-                <rect x="40" y="40" width="320" height="320" rx="36" className="board-inner-border" />
+                <svg
+                    viewBox="0 0 400 400"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                    className="absolute inset-0 h-full w-full"
+                >
+                    <defs>
+                        <linearGradient id="board-gradient" x1="15%" y1="0%" x2="85%" y2="100%">
+                            <stop offset="0%" stopColor="rgba(148, 163, 184, 0.18)" />
+                            <stop offset="45%" stopColor="rgba(51, 65, 85, 0.08)" />
+                            <stop offset="100%" stopColor="rgba(15, 23, 42, 0.5)" />
+                        </linearGradient>
+                        <radialGradient id="node-glow" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stopColor="rgba(248, 250, 252, 1)" />
+                            <stop offset="100%" stopColor="rgba(14, 165, 233, 0)" />
+                        </radialGradient>
+                    </defs>
 
-                {HOLES.map((hole, index) => (
-                    <g key={`hole-${index}`} transform={`translate(${hole.x} ${hole.y})`}>
-                        <circle r="16" className="hole-ring" />
-                        <circle r="9" className="hole-core" />
-                    </g>
-                ))}
+                    <rect x="22" y="22" width="356" height="356" rx="42" fill="url(#board-gradient)" className="board-surface" />
+                    <rect x="40" y="40" width="320" height="320" rx="36" className="board-inner-border" />
 
-                <g className="trace-group">
-                    {TRACES.map((path, index) => (
-                        <path key={`trace-${index}`} d={path} className="trace-path" style={{ animationDelay: `${index * 0.22}s` }} />
+                    {HOLES.map((hole, index) => (
+                        <g key={`hole-${index}`} transform={`translate(${hole.x} ${hole.y})`}>
+                            <circle r="16" className="hole-ring" />
+                            <circle r="9" className="hole-core" />
+                        </g>
                     ))}
-                </g>
 
-      </svg>
+                    <g className="trace-group">
+                        {TRACES.map((path, index) => (
+                            <path key={`trace-${index}`} d={path} className="trace-path" style={{ animationDelay: `${index * 0.22}s` }} />
+                        ))}
+                    </g>
+                </svg>
 
-            <div className="floating-bubbles" style={{ opacity: isLowPowerMode ? 0 : 1 }}>
-                {BUBBLE_PARTICLES.map((bubble, index) => (
-                    <span
-                        key={`bubble-${index}`}
-                        className="bubble-particle"
-                        style={{
-                            animationDelay: `${bubble.delay}s`,
-                            animationDuration: `${bubble.duration}s`,
-                            animationPlayState: isLowPowerMode ? "paused" : undefined,
-                            opacity: isLowPowerMode ? 0 : undefined,
-                            "--tx": `${bubble.tx}px`,
-                            "--ty": `${bubble.ty}px`,
-                            "--bounce-tx": `${bubble.bounceTx}px`,
-                            "--bounce-ty": `${bubble.bounceTy}px`,
-                            "--bubble-size": `${bubble.size}px`,
-                        } as CSSProperties}
-                    />
-                ))}
-            </div>
-            <div
-                className="core-chip absolute"
-                style={{
-                    left: `calc(50% - ${(isLowPowerMode ? CORE_SIZE_COMPACT : CORE_SIZE) / 2}px)`,
-                    top: `calc(50% - ${(isLowPowerMode ? CORE_SIZE_COMPACT : CORE_SIZE) / 2}px)`,
-                    width: isLowPowerMode ? CORE_SIZE_COMPACT : CORE_SIZE,
-                    height: isLowPowerMode ? CORE_SIZE_COMPACT : CORE_SIZE,
-                }}
-            >
-                {POWER_PULSE_DELAYS.map((delay) => (
-                    <span
-                        key={`pulse-${delay}`}
-                        className="core-chip__pulse"
-                        style={{
-                            animationDelay: `${delay}s`,
-                            animationPlayState: isLowPowerMode ? "paused" : undefined,
-                            opacity: isLowPowerMode ? 0 : undefined,
-                        }}
-                    />
-                ))}
+                <div className="floating-bubbles" style={{ opacity: showFullEffects ? 1 : 0 }}>
+                    {BUBBLE_PARTICLES.map((bubble, index) => (
+                        <span
+                            key={`bubble-${index}`}
+                            className="bubble-particle"
+                            style={{
+                                animationDelay: `${bubble.delay}s`,
+                                animationDuration: `${bubble.duration}s`,
+                                animationPlayState: showFullEffects ? undefined : "paused",
+                                opacity: showFullEffects ? undefined : 0,
+                                "--tx": `${bubble.tx}px`,
+                                "--ty": `${bubble.ty}px`,
+                                "--bounce-tx": `${bubble.bounceTx}px`,
+                                "--bounce-ty": `${bubble.bounceTy}px`,
+                                "--bubble-size": `${bubble.size}px`,
+                            } as CSSProperties}
+                        />
+                    ))}
+                </div>
+
                 <div
-                    className="core-chip__glow"
-                    style={
-                        isLowPowerMode
-                            ? {
-                                  opacity: 0.55,
-                                  filter: "blur(26px)",
-                              }
-                            : undefined
-                    }
-                />
-                <Image
-                    src={SnapdragonCenter}
-                    alt="Snapdragon 8 Elite"
-                    fill
-                    priority
-                    className="core-chip__image"
-                    sizes="(min-width: 1536px) 240px, (min-width: 1280px) 220px, (min-width: 1024px) 190px, (min-width: 640px) 170px, 38vw"
-                />
-                <div className="core-chip__frame" />
-                <div className="core-chip__glass" />
-            </div>
-
-            {CHIP_SPECS.map((chip) => {
-                const overrides = isLowPowerMode ? chip.sm : undefined;
-                const effectiveX = overrides?.x ?? chip.x;
-                const effectiveY = overrides?.y ?? chip.y;
-                const effectiveWidth = overrides?.width ?? chip.width;
-                const effectiveHeight = overrides?.height ?? chip.height;
-
-                return (
+                    className="core-chip absolute"
+                    style={{
+                        left: `calc(50% - ${(isLowPowerMode ? CORE_SIZE_COMPACT : CORE_SIZE) / 2}px)`,
+                        top: `calc(50% - ${(isLowPowerMode ? CORE_SIZE_COMPACT : CORE_SIZE) / 2}px)`,
+                        width: isLowPowerMode ? CORE_SIZE_COMPACT : CORE_SIZE,
+                        height: isLowPowerMode ? CORE_SIZE_COMPACT : CORE_SIZE,
+                    }}
+                >
+                    {showFullEffects &&
+                        POWER_PULSE_DELAYS.map((delay) => (
+                            <span key={`pulse-${delay}`} className="core-chip__pulse" style={{ animationDelay: `${delay}s` }} />
+                        ))}
                     <div
-                        key={chip.id}
-                        className="chip-card"
-                        style={{
-                            top: `${effectiveY * 100}%`,
-                            left: `${effectiveX * 100}%`,
-                            width: `${effectiveWidth}px`,
-                            height: `${effectiveHeight}px`,
-                            animationPlayState: isLowPowerMode ? "paused" : undefined,
-                            animationDelay: `${chip.delay}s`,
-                        }}
-                    >
-                        <div className="chip-card__glow" style={{ background: chip.glowColor }} />
-                        <div className="chip-card__body">
-                            <Image
-                                src={chip.image}
-                                alt={chip.id.replace("-", " ")}
-                                fill
-                                sizes="140px"
-                                className="chip-card__image"
-                                priority={chip.id === "lpddr5"}
-                            />
-                            <div className="chip-card__frame" />
-                            <div className="chip-card__glass" />
+                        className="core-chip__glow"
+                        style={
+                            showFullEffects
+                                ? undefined
+                                : {
+                                      opacity: 0.55,
+                                      filter: "blur(26px)",
+                                  }
+                        }
+                    />
+                    {showFullEffects && (
+                        <div className="chip-blue-burst">
+                            <span className="chip-blue-burst__ring chip-blue-burst__ring--one" />
+                            <span className="chip-blue-burst__ring chip-blue-burst__ring--two" />
                         </div>
-                    </div>
-                );
-            })}
+                    )}
+                    <Image
+                        src={SnapdragonCenter}
+                        alt="Snapdragon 8 Elite"
+                        fill
+                        priority
+                        className="core-chip__image"
+                        sizes="(min-width: 1536px) 240px, (min-width: 1280px) 220px, (min-width: 1024px) 190px, (min-width: 640px) 170px, 38vw"
+                    />
+                    <div className="core-chip__frame" />
+                    <div className="core-chip__glass" />
+                </div>
 
+                {CHIP_SPECS.map((chip) => {
+                    const overrides = isCompact ? chip.sm : undefined;
+                    const effectiveX = overrides?.x ?? chip.x;
+                    const effectiveY = overrides?.y ?? chip.y;
+                    const effectiveWidth = overrides?.width ?? chip.width;
+                    const effectiveHeight = overrides?.height ?? chip.height;
+
+                    return (
+                        <div
+                            key={chip.id}
+                            className="chip-card"
+                            style={{
+                                top: `${effectiveY * 100}%`,
+                                left: `${effectiveX * 100}%`,
+                                width: `${effectiveWidth}px`,
+                                height: `${effectiveHeight}px`,
+                                animationPlayState: showFullEffects ? undefined : "paused",
+                                animationDelay: `${chip.delay}s`,
+                            }}
+                        >
+                            {showFullEffects && <div className="chip-card__glow" style={{ background: chip.glowColor }} />}
+                            <div className="chip-card__body">
+                                <Image
+                                    src={chip.image}
+                                    alt={chip.id.replace("-", " ")}
+                                    fill
+                                    sizes="140px"
+                                    className="chip-card__image"
+                                    priority={chip.id === "lpddr5"}
+                                />
+                                <div className="chip-card__frame" />
+                                <div className="chip-card__glass" />
+                            </div>
+                        </div>
+                    );
+                })}
             </motion.div>
         </motion.div>
     );
