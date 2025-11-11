@@ -40,7 +40,7 @@ export function HeroSection() {
     <section
       ref={sectionRef}
       id="home"
-      className="relative flex min-h-screen flex-col items-center justify-start overflow-hidden bg-[radial-gradient(circle_at_bottom,_rgba(79,56,176,0.32),rgba(16,12,45,0.72)_64%)] px-4 pt-36 pb-40 text-white sm:px-8 sm:pt-28 sm:pb-40 md:px-14 lg:px-20 xl:px-24 2xl:px-36"
+      className="relative flex min-h-screen flex-col items-center justify-start overflow-hidden bg-[radial-gradient(circle_at_bottom,_rgba(79,56,176,0.32),rgba(16,12,45,0.72)_64%)] px-4 pt-24 pb-40 text-white sm:px-8 sm:pt-28 sm:pb-40 md:px-14 lg:px-20 xl:px-24 2xl:px-36"
     >
       <motion.div
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(140,128,255,0.16),transparent_74%)]"
@@ -69,7 +69,7 @@ export function HeroSection() {
         Welcome to Sense
       </span>
       <motion.div
-        className="pointer-events-none relative z-10 flex justify-center px-2 pt-16 text-center sm:px-6 sm:pt-10 md:px-10 lg:px-16 xl:px-20"
+        className="pointer-events-none relative z-10 flex justify-center px-2 pt-8 text-center sm:px-6 sm:pt-10 md:px-10 lg:px-16 xl:px-20"
         style={{ y: introDrift }}
       >
         <div className="pointer-events-auto relative mx-auto max-w-4xl select-none text-balance text-center text-white/80">
