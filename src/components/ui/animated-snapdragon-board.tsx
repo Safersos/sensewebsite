@@ -52,8 +52,8 @@ const CHIP_SPECS: ChipSpec[] = [
         glowColor: "rgba(59, 130, 246, 0.35)",
         sm: {
             x: 0.26,
-            y: 0.24,
-            width: 82,
+            y: 0.22,
+            width: 76,
             height: 54,
         },
     },
@@ -67,10 +67,10 @@ const CHIP_SPECS: ChipSpec[] = [
         delay: 0.85,
         glowColor: "rgba(249, 115, 22, 0.38)",
         sm: {
-            x: 0.82,
-            y: 0.34,
-            width: 78,
-            height: 52,
+            x: 0.80,
+            y: 0.36,
+            width: 72,
+            height: 49,
         },
     },
     {
@@ -84,9 +84,9 @@ const CHIP_SPECS: ChipSpec[] = [
         glowColor: "rgba(16, 185, 129, 0.32)",
         sm: {
             x: 0.76,
-            y: 0.66,
-            width: 80,
-            height: 52,
+            y: 0.68,
+            width: 76,
+            height: 50,
         },
     },
     {
@@ -99,10 +99,10 @@ const CHIP_SPECS: ChipSpec[] = [
         delay: 1.55,
         glowColor: "rgba(96, 165, 250, 0.32)",
         sm: {
-            x: 0.28,
-            y: 0.76,
-            width: 80,
-            height: 52,
+            x: 0.33,
+            y: 0.78,
+            width: 74,
+            height: 50,
         },
     },
 ];
