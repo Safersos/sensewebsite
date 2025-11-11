@@ -62,14 +62,14 @@ export function HeroSection() {
           ))}
         </div>
       </div>
-      <span className="pointer-events-auto absolute left-4 top-[10.5vh] -translate-y-6 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs uppercase tracking-[0.28em] text-white/70 backdrop-blur-md sm:left-6 sm:top-[14vh] sm:-translate-y-24 sm:text-sm md:hidden">
+      <span className="pointer-events-auto absolute left-4 top-[7vh] -translate-y-4 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs uppercase tracking-[0.28em] text-white/70 backdrop-blur-md sm:left-6 sm:top-[14vh] sm:-translate-y-24 sm:text-sm md:hidden">
         Welcome to Sense
       </span>
       <span className="pointer-events-auto absolute left-6 top-[14vh] hidden -translate-y-14 rounded-full border border-white/15 bg-white/10 px-5 py-2.5 text-sm uppercase tracking-[0.32em] text-white/70 backdrop-blur-md md:block lg:left-12 xl:left-16">
         Welcome to Sense
       </span>
       <motion.div
-        className="pointer-events-none relative z-10 flex justify-center px-2 pt-20 text-center sm:px-6 sm:pt-10 md:px-10 lg:px-16 xl:px-20"
+        className="pointer-events-none relative z-10 flex justify-center px-2 pt-16 text-center sm:px-6 sm:pt-10 md:px-10 lg:px-16 xl:px-20"
         style={{ y: introDrift }}
       >
         <div className="pointer-events-auto relative mx-auto max-w-4xl select-none text-balance text-center text-white/80">
@@ -90,7 +90,7 @@ export function HeroSection() {
         </div>
       </motion.div>
       <motion.div
-        className="relative z-10 mt-10 w-full max-w-3xl overflow-hidden rounded-[24px] border border-white/10 bg-white/5 p-5 text-center shadow-[0_18px_50px_rgba(10,8,30,0.45)] backdrop-blur-xl sm:mt-16 lg:mt-14 lg:p-6 xl:mt-16 xl:max-w-[900px]"
+        className="relative z-10 mt-8 w-full max-w-3xl overflow-hidden rounded-[24px] border border-white/10 bg-white/5 p-5 text-center shadow-[0_18px_50px_rgba(10,8,30,0.45)] backdrop-blur-xl sm:mt-16 lg:mt-14 lg:p-6 xl:mt-16 xl:max-w-[900px]"
         style={{ y: corePanelDrift }}
       >
         <div className="relative mx-auto h-44 w-full max-w-md sm:h-48 sm:max-w-lg lg:h-48 lg:max-w-[460px] xl:h-50 xl:max-w-[520px]">
