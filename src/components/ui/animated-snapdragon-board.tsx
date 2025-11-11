@@ -98,6 +98,8 @@ const BUBBLE_PARTICLES: BubbleParticle[] = [
   { tx: -170, ty: -90, bounceTx: -120, bounceTy: -10, size: 10, delay: 3.3, duration: 4.7 },
 ];
 
+const POWER_PULSE_DELAYS = [0, 1.8, 3.6];
+
 export function AnimatedSnapdragonBoard() {
     const boardRef = useRef<HTMLDivElement>(null);
     const { scrollYProgress } = useScroll({
@@ -190,7 +192,27 @@ export function AnimatedSnapdragonBoard() {
 
       </svg>
 
+            <div className="floating-bubbles">
+                {BUBBLE_PARTICLES.map((bubble, index) => (
+                    <span
+                        key={`bubble-${index}`}
+                        className="bubble-particle"
+                        style={{
+                            animationDelay: `${bubble.delay}s`,
+                            animationDuration: `${bubble.duration}s`,
+                            "--tx": `${bubble.tx}px`,
+                            "--ty": `${bubble.ty}px`,
+                            "--bounce-tx": `${bubble.bounceTx}px`,
+                            "--bounce-ty": `${bubble.bounceTy}px`,
+                            "--bubble-size": `${bubble.size}px`,
+                        } as CSSProperties}
+                    />
+                ))}
+            </div>
             <div className="core-chip absolute" style={{ left: `calc(50% - ${CORE_SIZE / 2}px)`, top: `calc(50% - ${CORE_SIZE / 2}px)`, width: CORE_SIZE, height: CORE_SIZE }}>
+                {POWER_PULSE_DELAYS.map((delay) => (
+                    <span key={`pulse-${delay}`} className="core-chip__pulse" style={{ animationDelay: `${delay}s` }} />
+                ))}
                 <div className="core-chip__glow" />
                 <Image
                     src={SnapdragonCenter}
@@ -232,23 +254,6 @@ export function AnimatedSnapdragonBoard() {
                 </div>
             ))}
 
-            <div className="floating-bubbles">
-                {BUBBLE_PARTICLES.map((bubble, index) => (
-                    <span
-                        key={`bubble-${index}`}
-                        className="bubble-particle"
-                        style={{
-                            animationDelay: `${bubble.delay}s`,
-                            animationDuration: `${bubble.duration}s`,
-                            "--tx": `${bubble.tx}px`,
-                            "--ty": `${bubble.ty}px`,
-                            "--bounce-tx": `${bubble.bounceTx}px`,
-                            "--bounce-ty": `${bubble.bounceTy}px`,
-                            "--bubble-size": `${bubble.size}px`,
-                        } as CSSProperties}
-                    />
-                ))}
-            </div>
             </motion.div>
         </motion.div>
     );

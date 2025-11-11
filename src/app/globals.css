@@ -314,6 +314,21 @@
     filter: drop-shadow(0 24px 70px rgba(248, 191, 60, 0.38));
     animation: chip-breathe 6s ease-in-out infinite;
     transform-origin: center;
+    z-index: 3;
+  }
+
+  .glass-board .core-chip__pulse {
+    position: absolute;
+    inset: -26%;
+    border-radius: 50%;
+    border: 2px solid rgba(253, 224, 71, 0.38);
+    box-shadow:
+      0 0 22px rgba(253, 224, 71, 0.32),
+      inset 0 0 18px rgba(253, 224, 71, 0.18);
+    opacity: 0;
+    animation: core-pulse 5.4s ease-out infinite;
+    transform-origin: center;
+    pointer-events: none;
   }
 
   .glass-board .core-chip__image {
@@ -358,6 +373,7 @@
     transform-style: preserve-3d;
     animation: chip-enter 0.9s cubic-bezier(0.21, 1, 0.29, 1) forwards;
     transition: transform 250ms ease, filter 250ms ease;
+    z-index: 4;
   }
 
   .chip-card__body {
@@ -468,7 +484,7 @@
     }
 
     50% {
-      transform: scale(1.025);
+      transform: scale(1.05);
     }
   }
 
@@ -476,11 +492,30 @@
 
     0%,
     100% {
-      opacity: 0.75;
+      opacity: 0.65;
+      transform: scale(0.94);
     }
 
     50% {
-      opacity: 1;
+      opacity: 1.05;
+      transform: scale(1.04);
+    }
+  }
+
+  @keyframes core-pulse {
+    0% {
+      transform: scale(0.7);
+      opacity: 0.55;
+    }
+
+    55% {
+      opacity: 0.18;
+      transform: scale(1.55);
+    }
+
+    100% {
+      opacity: 0;
+      transform: scale(1.95);
     }
   }
 
@@ -533,6 +568,7 @@
   border-radius: 36px;
   overflow: hidden;
   pointer-events: none;
+  z-index: 2;
 }
 
 .bubble-particle {
