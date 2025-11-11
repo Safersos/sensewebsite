@@ -4,6 +4,7 @@ import * as React from "react";
 import { motion } from "framer-motion";
 
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 type GeneratedPath = {
   id: number;
@@ -99,10 +100,14 @@ export function BackgroundPaths({
   title = "Background Paths",
   children,
   mobileSpeedMultiplier = 1.45,
+  containerClassName,
+  contentClassName,
 }: {
   title?: string;
   children?: React.ReactNode;
   mobileSpeedMultiplier?: number;
+  containerClassName?: string;
+  contentClassName?: string;
 }) {
   const words = React.useMemo(() => title.split(" "), [title]);
   const [isMobile, setIsMobile] = React.useState(false);
@@ -131,12 +136,17 @@ export function BackgroundPaths({
           speedFactor={isMobile ? mobileSpeedMultiplier : 1}
         />
       </div>
-      <div className="container relative z-10 mx-auto px-4 text-center md:px-6">
+      <div
+        className={cn(
+          "container relative z-10 mx-auto px-4 text-center md:px-6",
+          containerClassName
+        )}
+      >
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 2 }}
-          className="mx-auto max-w-4xl"
+          className={cn("mx-auto max-w-4xl", contentClassName)}
         >
           {children ?? (
             <>

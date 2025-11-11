@@ -119,7 +119,11 @@ export default function AboutPage() {
   return (
     <main className="relative bg-neutral-950 text-white">
       <section className="relative">
-        <BackgroundPaths title="Sense in Motion">
+        <BackgroundPaths
+          title="Sense in Motion"
+          containerClassName="max-w-none w-full px-0"
+          contentClassName="w-full max-w-none px-0"
+        >
           <div className="relative flex min-h-screen w-full flex-col items-center justify-start overflow-hidden px-4 pt-24 pb-24 sm:px-8 sm:pt-28 sm:pb-28 md:px-14 lg:px-20 xl:px-24 2xl:px-36">
             <span className="pointer-events-auto absolute left-4 top-[7vh] -translate-y-4 rounded-full border border-neutral-900/15 bg-white/90 px-4 py-2 text-xs uppercase tracking-[0.28em] text-neutral-900/70 backdrop-blur-md sm:left-6 sm:top-[14vh] sm:-translate-y-24 sm:text-sm md:hidden">
               Learn about Sense
