@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { SiteDock } from "@/components/navigation/site-dock";
+import { SiteMobileDock } from "@/components/navigation/site-mobile-dock";
 import { NeuralCursor } from "@/components/ui/neural-cursor";
 import { PageTransition } from "@/components/ui/page-transition";
 import { SplashScreen } from "@/components/ui/splash-screen";
@@ -41,7 +42,10 @@ export default function RootLayout({
         <DisableContextMenu />
         <SplashScreen />
         <NeuralCursor />
-        <SiteDock />
+        <SiteMobileDock />
+        <div className="hidden md:block">
+          <SiteDock />
+        </div>
         <PageTransition>{children}</PageTransition>
       </body>
     </html>
