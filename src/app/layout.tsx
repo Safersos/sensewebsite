@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { SiteDock } from "@/components/navigation/site-dock";
@@ -28,7 +28,6 @@ export const metadata: Metadata = {
   title: "Home | Sense",
   description: "Sense — a new frontier for motion-led product design.",
   manifest: "/manifest.webmanifest",
-  themeColor: "#04020D",
   icons: {
     icon: "/favicon.ico",
     apple: "/favicon.ico",
@@ -38,6 +37,10 @@ export const metadata: Metadata = {
     statusBarStyle: "black-translucent",
     title: "Sense",
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#04020D",
 };
 
 export default function RootLayout({

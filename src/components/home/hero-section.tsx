@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 import type { CSSProperties } from "react";
+import { useRef } from "react";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { CpuArchitecture } from "@/components/ui/cpu-architecture";
 import { TextParticle } from "@/components/ui/text-particle";
 import { AnimatedSnapdragonBoard } from "@/components/ui/animated-snapdragon-board";
@@ -9,6 +11,18 @@ import { Fingerprint, Sparkles } from "lucide-react";
 import PodGif from "../../../assets/pod.gif";
 
 export function HeroSection() {
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start 90%", "end 10%"],
+  });
+
+  const springConfig = { stiffness: 120, damping: 20, mass: 0.6 };
+  const backgroundDrift = useSpring(useTransform(scrollYProgress, [0, 1], [0, -220]), springConfig);
+  const introDrift = useSpring(useTransform(scrollYProgress, [0, 1], [0, 110]), springConfig);
+  const corePanelDrift = useSpring(useTransform(scrollYProgress, [0, 1], [0, 180]), springConfig);
+  const chipDeckDrift = useSpring(useTransform(scrollYProgress, [0, 1], [0, 220]), springConfig);
+
   const shootingStars = [
     { top: "18%", left: "12%", duration: "5.8s", delay: "0s" },
     { top: "48%", left: "8%", duration: "6.3s", delay: "-1.8s" },
@@ -24,10 +38,14 @@ export function HeroSection() {
 
   return (
     <section
+      ref={sectionRef}
       id="home"
       className="relative flex min-h-screen flex-col items-center justify-start overflow-hidden bg-[radial-gradient(circle_at_bottom,_rgba(79,56,176,0.32),rgba(16,12,45,0.72)_64%)] px-4 pt-36 pb-40 text-white sm:px-8 sm:pt-28 sm:pb-40 md:px-14 lg:px-20 xl:px-24 2xl:px-36"
     >
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(140,128,255,0.16),transparent_74%)]" />
+      <motion.div
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(140,128,255,0.16),transparent_74%)]"
+        style={{ y: backgroundDrift }}
+      />
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="shooting-stars h-full w-full">
           {shootingStars.map((star, index) => (
@@ -50,7 +68,10 @@ export function HeroSection() {
       <span className="pointer-events-auto absolute left-6 top-[14vh] hidden -translate-y-14 rounded-full border border-white/15 bg-white/10 px-5 py-2.5 text-sm uppercase tracking-[0.32em] text-white/70 backdrop-blur-md md:block lg:left-12 xl:left-16">
         Welcome to Sense
       </span>
-      <div className="pointer-events-none relative z-10 flex justify-center px-2 pt-20 text-center sm:px-6 sm:pt-10 md:px-10 lg:px-16 xl:px-20">
+      <motion.div
+        className="pointer-events-none relative z-10 flex justify-center px-2 pt-20 text-center sm:px-6 sm:pt-10 md:px-10 lg:px-16 xl:px-20"
+        style={{ y: introDrift }}
+      >
         <div className="pointer-events-auto relative mx-auto max-w-4xl select-none text-balance text-center text-white/80">
           <p className="text-[26px] font-semibold uppercase tracking-[0.22em] text-white/25 sm:text-[30px] md:text-[32px] md:leading-tight lg:text-[36px] xl:text-[40px] 2xl:text-[46px]">
             The future of intelligence is
@@ -67,13 +88,19 @@ export function HeroSection() {
             <span className="text-sm tracking-[0.32em] text-white/80 sm:text-base md:text-lg">AI</span>
           </div>
         </div>
-      </div>
-      <div className="relative z-10 mt-10 w-full max-w-3xl overflow-hidden rounded-[24px] border border-white/10 bg-white/5 p-5 text-center shadow-[0_18px_50px_rgba(10,8,30,0.45)] backdrop-blur-xl sm:mt-16 lg:mt-20 lg:p-6 xl:max-w-4xl">
+      </motion.div>
+      <motion.div
+        className="relative z-10 mt-10 w-full max-w-3xl overflow-hidden rounded-[24px] border border-white/10 bg-white/5 p-5 text-center shadow-[0_18px_50px_rgba(10,8,30,0.45)] backdrop-blur-xl sm:mt-16 lg:mt-20 lg:p-6 xl:max-w-4xl"
+        style={{ y: corePanelDrift }}
+      >
         <div className="relative mx-auto h-44 w-full max-w-md sm:h-48 sm:max-w-lg lg:h-52 xl:h-56 xl:max-w-xl">
           <CpuArchitecture className="h-full w-full text-white/95" />
         </div>
-      </div>
-      <div className="relative z-10 mt-14 flex w-full max-w-6xl flex-col items-center text-center sm:mt-16 md:mt-20 lg:mt-24 xl:mt-28">
+      </motion.div>
+      <motion.div
+        className="relative z-10 mt-14 flex w-full max-w-6xl flex-col items-center text-center sm:mt-16 md:mt-20 lg:mt-24 xl:mt-28"
+        style={{ y: chipDeckDrift }}
+      >
         <div className="relative flex w-full max-w-xl flex-col items-center sm:max-w-2xl">
           <div className="h-[36px] w-full sm:h-[44px] lg:h-[50px] xl:h-[58px]">
             <TextParticle
@@ -113,7 +140,7 @@ export function HeroSection() {
             <AnimatedSnapdragonBoard />
           </div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }
