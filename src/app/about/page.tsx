@@ -120,33 +120,37 @@ export default function AboutPage() {
     <main className="relative bg-neutral-950 text-white">
       <section className="relative">
         <BackgroundPaths title="Sense in Motion">
-          <span className="pointer-events-auto absolute left-4 top-[7vh] -translate-y-4 rounded-full border border-neutral-900/15 bg-white/90 px-4 py-2 text-xs uppercase tracking-[0.28em] text-neutral-900/70 backdrop-blur-md sm:left-6 sm:top-[14vh] sm:-translate-y-24 sm:text-sm md:hidden">
-            Learn about Sense
-          </span>
-          <span className="pointer-events-auto absolute left-6 top-[14vh] hidden -translate-y-14 rounded-full border border-neutral-900/15 bg-white/90 px-5 py-2.5 text-sm uppercase tracking-[0.32em] text-neutral-900/70 backdrop-blur-md md:block lg:left-12 xl:left-16">
-            Learn about Sense
-          </span>
-          <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-12 text-center">
-            <div className="flex w-full items-center justify-center lg:hidden">
-              <SphereImageGrid
-                images={HERO_SPHERE_IMAGES}
-                {...SPHERE_CONFIG}
-                containerSize={400}
-                sphereRadius={150}
-                baseImageScale={0.2}
-                className="h-auto w-full max-w-[420px]"
-              />
-            </div>
+          <div className="relative flex min-h-screen w-full flex-col items-center justify-start overflow-hidden px-4 pt-24 pb-24 sm:px-8 sm:pt-28 sm:pb-28 md:px-14 lg:px-20 xl:px-24 2xl:px-36">
+            <span className="pointer-events-auto absolute left-4 top-[7vh] -translate-y-4 rounded-full border border-neutral-900/15 bg-white/90 px-4 py-2 text-xs uppercase tracking-[0.28em] text-neutral-900/70 backdrop-blur-md sm:left-6 sm:top-[14vh] sm:-translate-y-24 sm:text-sm md:hidden">
+              Learn about Sense
+            </span>
+            <span className="pointer-events-auto absolute left-6 top-[14vh] hidden -translate-y-14 rounded-full border border-neutral-900/15 bg-white/90 px-5 py-2.5 text-sm uppercase tracking-[0.32em] text-neutral-900/70 backdrop-blur-md md:block lg:left-12 xl:left-16 2xl:left-24">
+              Learn about Sense
+            </span>
+            <div className="flex flex-1 flex-col items-center justify-center">
+              <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-12 text-center">
+                <div className="flex w-full items-center justify-center lg:hidden">
+                  <SphereImageGrid
+                    images={HERO_SPHERE_IMAGES}
+                    {...SPHERE_CONFIG}
+                    containerSize={400}
+                    sphereRadius={150}
+                    baseImageScale={0.2}
+                    className="h-auto w-full max-w-[420px]"
+                  />
+                </div>
 
-            <div className="hidden w-full items-center justify-center lg:flex">
-              <SphereImageGrid
-                images={HERO_SPHERE_IMAGES}
-                {...SPHERE_CONFIG}
-                containerSize={540}
-                sphereRadius={190}
-                baseImageScale={0.2}
-                className="h-auto w-full max-w-[560px]"
-              />
+                <div className="hidden w-full items-center justify-center lg:flex">
+                  <SphereImageGrid
+                    images={HERO_SPHERE_IMAGES}
+                    {...SPHERE_CONFIG}
+                    containerSize={540}
+                    sphereRadius={190}
+                    baseImageScale={0.2}
+                    className="h-auto w-full max-w-[560px]"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </BackgroundPaths>
