@@ -338,12 +338,6 @@ export function AnimatedSnapdragonBoard() {
                 const effectiveWidth = overrides?.width ?? chip.width;
                 const effectiveHeight = overrides?.height ?? chip.height;
 
-                const pulseGlow = isLowPowerMode
-                    ? undefined
-                    : {
-                          background: chip.glowColor,
-                      };
-
                 return (
                     <div
                         key={chip.id}
@@ -357,7 +351,7 @@ export function AnimatedSnapdragonBoard() {
                             animationDelay: `${chip.delay}s`,
                         }}
                     >
-                        <div className="chip-card__glow" style={pulseGlow} />
+                        <div className="chip-card__glow" style={{ background: chip.glowColor }} />
                         <div className="chip-card__body">
                             <Image
                                 src={chip.image}

@@ -342,6 +342,20 @@
   animation: core-glow 8s ease-in-out infinite;
 }
 
+.glass-board .core-chip__pulse {
+  position: absolute;
+  inset: -26%;
+  border-radius: 50%;
+  border: 2px solid rgba(253, 224, 71, 0.38);
+  box-shadow:
+    0 0 22px rgba(253, 224, 71, 0.32),
+    inset 0 0 18px rgba(253, 224, 71, 0.18);
+  opacity: 0;
+  animation: core-pulse 5.4s ease-out infinite;
+  transform-origin: center;
+  pointer-events: none;
+}
+
 .glass-board .chip-card__glow {
   position: absolute;
   inset: -45%;
@@ -355,6 +369,10 @@
   filter: none;
   backdrop-filter: none;
   opacity: 0.55;
+}
+
+.glass-board.is-low-power .core-chip__pulse {
+  display: none;
 }
 
 .glass-board.is-low-power .chip-card__glow {
