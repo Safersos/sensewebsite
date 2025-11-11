@@ -317,20 +317,6 @@
     z-index: 3;
   }
 
-  .glass-board .core-chip__pulse {
-    position: absolute;
-    inset: -26%;
-    border-radius: 50%;
-    border: 2px solid rgba(253, 224, 71, 0.38);
-    box-shadow:
-      0 0 22px rgba(253, 224, 71, 0.32),
-      inset 0 0 18px rgba(253, 224, 71, 0.18);
-    opacity: 0;
-    animation: core-pulse 5.4s ease-out infinite;
-    transform-origin: center;
-    pointer-events: none;
-  }
-
   .glass-board .core-chip__image {
     border-radius: 18px;
     box-shadow:
@@ -347,14 +333,33 @@
     opacity: 0.65;
   }
 
-  .glass-board .core-chip__glow {
+.glass-board .core-chip__glow {
     position: absolute;
     inset: -40%;
-    background: radial-gradient(circle, rgba(253, 224, 71, 0.26), transparent 72%);
-    filter: blur(34px);
-    opacity: 0.9;
-    animation: core-glow 8s ease-in-out infinite;
-  }
+  background: radial-gradient(circle, rgba(253, 224, 71, 0.26), transparent 72%);
+  filter: blur(34px);
+  opacity: 0.9;
+  animation: core-glow 8s ease-in-out infinite;
+}
+
+.glass-board .chip-card__glow {
+  position: absolute;
+  inset: -45%;
+  border-radius: 50%;
+  filter: blur(42px);
+  opacity: 0;
+  animation: chip-glow-rise 2s ease forwards;
+}
+
+.glass-board.is-low-power .core-chip__glow {
+  filter: none;
+  backdrop-filter: none;
+  opacity: 0.55;
+}
+
+.glass-board.is-low-power .chip-card__glow {
+  display: none;
+}
 
   .glass-board .core-chip__frame {
     position: absolute;

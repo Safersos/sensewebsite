@@ -128,6 +128,7 @@ export function AnimatedSnapdragonBoard() {
     const boardRef = useRef<HTMLDivElement>(null);
     const [isCompact, setIsCompact] = useState(false);
     const [isZoomSuppressed, setIsZoomSuppressed] = useState(false);
+    const [suppressRemembered, setSuppressRemembered] = useState(false);
     useEffect(() => {
         if (typeof window === "undefined") {
             return;
@@ -147,7 +148,9 @@ export function AnimatedSnapdragonBoard() {
         const { visualViewport } = window;
         const handleZoom = () => {
             const scale = visualViewport?.scale ?? 1;
-            setIsZoomSuppressed(scale > 1.35);
+            const shouldSuppress = scale > 1.18;
+            setIsZoomSuppressed(shouldSuppress);
+            setSuppressRemembered((prev) => prev || shouldSuppress);
         };
         handleZoom();
         visualViewport.addEventListener("resize", handleZoom);
@@ -157,6 +160,7 @@ export function AnimatedSnapdragonBoard() {
             visualViewport.removeEventListener("scroll", handleZoom);
         };
     }, []);
+    const isLowPowerMode = isCompact || isZoomSuppressed || suppressRemembered;
     const { scrollYProgress } = useScroll({
         target: boardRef,
         offset: ["start 92%", "end 8%"],
@@ -189,16 +193,16 @@ export function AnimatedSnapdragonBoard() {
             ref={boardRef}
             className="relative mx-auto aspect-square w-full max-w-[320px] sm:max-w-[380px] lg:max-w-[420px] xl:max-w-[460px] 2xl:max-w-[500px]"
             style={{
-                perspective: isZoomSuppressed ? 1200 : 1600,
-                y: isZoomSuppressed ? 0 : lift,
+                perspective: isLowPowerMode ? 1100 : 1600,
+                y: isLowPowerMode ? 0 : lift,
             }}
         >
             <motion.div
-                className="glass-board group relative h-full w-full"
+                className={`glass-board group relative h-full w-full${isLowPowerMode ? " is-low-power" : ""}`}
                 style={{
-                    rotateX: isZoomSuppressed ? 0 : rotateX,
-                    rotateY: isZoomSuppressed ? 0 : rotateYWithWobble,
-                    transformStyle: isZoomSuppressed ? "flat" : "preserve-3d",
+                    rotateX: isLowPowerMode ? 0 : rotateX,
+                    rotateY: isLowPowerMode ? 0 : rotateYWithWobble,
+                    transformStyle: isLowPowerMode ? "flat" : "preserve-3d",
                     willChange: "transform",
                 }}
             >
@@ -256,7 +260,7 @@ export function AnimatedSnapdragonBoard() {
 
       </svg>
 
-            <div className="floating-bubbles" style={{ opacity: isZoomSuppressed ? 0 : 1 }}>
+            <div className="floating-bubbles" style={{ opacity: isLowPowerMode ? 0 : 1 }}>
                 {BUBBLE_PARTICLES.map((bubble, index) => (
                     <span
                         key={`bubble-${index}`}
@@ -264,8 +268,8 @@ export function AnimatedSnapdragonBoard() {
                         style={{
                             animationDelay: `${bubble.delay}s`,
                             animationDuration: `${bubble.duration}s`,
-                            animationPlayState: isZoomSuppressed ? "paused" : undefined,
-                            opacity: isZoomSuppressed ? 0 : undefined,
+                            animationPlayState: isLowPowerMode ? "paused" : undefined,
+                            opacity: isLowPowerMode ? 0 : undefined,
                             "--tx": `${bubble.tx}px`,
                             "--ty": `${bubble.ty}px`,
                             "--bounce-tx": `${bubble.bounceTx}px`,
@@ -282,15 +286,15 @@ export function AnimatedSnapdragonBoard() {
                         className="core-chip__pulse"
                         style={{
                             animationDelay: `${delay}s`,
-                            animationPlayState: isZoomSuppressed ? "paused" : undefined,
-                            opacity: isZoomSuppressed ? 0 : undefined,
+                            animationPlayState: isLowPowerMode ? "paused" : undefined,
+                            opacity: isLowPowerMode ? 0 : undefined,
                         }}
                     />
                 ))}
                 <div
                     className="core-chip__glow"
                     style={
-                        isZoomSuppressed
+                        isLowPowerMode
                             ? {
                                   opacity: 0.55,
                                   filter: "blur(26px)",
@@ -317,6 +321,12 @@ export function AnimatedSnapdragonBoard() {
                 const effectiveWidth = overrides?.width ?? chip.width;
                 const effectiveHeight = overrides?.height ?? chip.height;
 
+                const pulseGlow = isLowPowerMode
+                    ? undefined
+                    : {
+                          background: chip.glowColor,
+                      };
+
                 return (
                     <div
                         key={chip.id}
@@ -326,11 +336,11 @@ export function AnimatedSnapdragonBoard() {
                             left: `${effectiveX * 100}%`,
                             width: `${effectiveWidth}px`,
                             height: `${effectiveHeight}px`,
-                            animationPlayState: isZoomSuppressed ? "paused" : undefined,
+                            animationPlayState: isLowPowerMode ? "paused" : undefined,
                             animationDelay: `${chip.delay}s`,
                         }}
                     >
-                        <div className="chip-card__glow" style={{ background: chip.glowColor }} />
+                        <div className="chip-card__glow" style={pulseGlow} />
                         <div className="chip-card__body">
                             <Image
                                 src={chip.image}
