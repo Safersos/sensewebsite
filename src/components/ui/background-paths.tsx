@@ -85,7 +85,7 @@ function FloatingPaths({
             strokeLinecap="round"
             strokeLinejoin="round"
             transition={{
-              duration: (28 + path.id * 0.9) / speedFactor,
+              duration: (18 + path.id * 0.6) / speedFactor,
               repeat: Number.POSITIVE_INFINITY,
               ease: "easeInOut",
             }}
