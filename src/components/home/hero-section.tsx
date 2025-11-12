@@ -3,6 +3,7 @@
 import type { CSSProperties } from "react";
 import { useRef } from "react";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
+import { AnimatedHero } from "@/components/ui/animated-hero";
 import { CpuArchitecture } from "@/components/ui/cpu-architecture";
 import { Fingerprint, Sparkles } from "lucide-react";
 
@@ -17,6 +18,7 @@ export function HeroSection() {
   const backgroundDrift = useSpring(useTransform(scrollYProgress, [0, 1], [0, -220]), springConfig);
   const introDrift = useSpring(useTransform(scrollYProgress, [0, 1], [0, 110]), springConfig);
   const corePanelDrift = useSpring(useTransform(scrollYProgress, [0, 1], [0, 180]), springConfig);
+  const extendedSectionDrift = useSpring(useTransform(scrollYProgress, [0, 1], [40, 0]), springConfig);
 
   const shootingStars = [
     { top: "18%", left: "12%", duration: "5.8s", delay: "0s" },
@@ -90,6 +92,11 @@ export function HeroSection() {
       >
         <div className="relative mx-auto h-44 w-full max-w-md sm:h-48 sm:max-w-lg lg:h-48 lg:max-w-[460px] xl:h-50 xl:max-w-[520px]">
           <CpuArchitecture className="h-full w-full text-white/95" />
+        </div>
+      </motion.div>
+      <motion.div className="relative z-10 mt-20 w-full sm:mt-24" style={{ y: extendedSectionDrift }}>
+        <div className="mx-auto w-full max-w-6xl rounded-[28px] border border-white/10 bg-gradient-to-b from-white/6 via-white/4 to-white/5 px-6 py-12 shadow-[0_28px_80px_rgba(8,6,28,0.55)] backdrop-blur-2xl sm:px-10 sm:py-16 lg:px-14">
+          <AnimatedHero />
         </div>
       </motion.div>
     </section>
