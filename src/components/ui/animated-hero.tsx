@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 
 function AnimatedHero() {
   const [titleIndex, setTitleIndex] = useState(0);
-  const titles = useMemo(() => ["amazing", "new", "wonderful", "beautiful", "smart"], []);
+  const titles = useMemo(() => ["SMART", "REVOLUTIONARY", "REAL", "WONDERFUL", "RELIABLE", "INCREDIBLE", "YOU MUST HAVE"], []);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -38,13 +38,13 @@ function AnimatedHero() {
                   animate={
                     titleIndex === index
                       ? {
-                          y: 0,
-                          opacity: 1,
-                        }
+                        y: 0,
+                        opacity: 1,
+                      }
                       : {
-                          y: titleIndex > index ? -150 : 150,
-                          opacity: 0,
-                        }
+                        y: titleIndex > index ? -150 : 150,
+                        opacity: 0,
+                      }
                   }
                 >
                   {title}
