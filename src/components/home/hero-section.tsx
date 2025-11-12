@@ -1,14 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import type { CSSProperties } from "react";
 import { useRef } from "react";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { CpuArchitecture } from "@/components/ui/cpu-architecture";
-import { TextParticle } from "@/components/ui/text-particle";
-import { AnimatedSnapdragonBoard } from "@/components/ui/animated-snapdragon-board";
 import { Fingerprint, Sparkles } from "lucide-react";
-import PodGif from "../../../assets/pod.gif";
 
 export function HeroSection() {
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -21,7 +17,6 @@ export function HeroSection() {
   const backgroundDrift = useSpring(useTransform(scrollYProgress, [0, 1], [0, -220]), springConfig);
   const introDrift = useSpring(useTransform(scrollYProgress, [0, 1], [0, 110]), springConfig);
   const corePanelDrift = useSpring(useTransform(scrollYProgress, [0, 1], [0, 180]), springConfig);
-  const chipDeckDrift = useSpring(useTransform(scrollYProgress, [0, 1], [0, 220]), springConfig);
 
   const shootingStars = [
     { top: "18%", left: "12%", duration: "5.8s", delay: "0s" },
@@ -95,50 +90,6 @@ export function HeroSection() {
       >
         <div className="relative mx-auto h-44 w-full max-w-md sm:h-48 sm:max-w-lg lg:h-48 lg:max-w-[460px] xl:h-50 xl:max-w-[520px]">
           <CpuArchitecture className="h-full w-full text-white/95" />
-        </div>
-      </motion.div>
-      <motion.div
-        className="relative z-10 mt-14 flex w-full max-w-6xl flex-col items-center text-center sm:mt-16 md:mt-20 lg:mt-24 xl:mt-28"
-        style={{ y: chipDeckDrift }}
-      >
-        <div className="relative flex w-full max-w-xl flex-col items-center sm:max-w-2xl">
-          <div className="h-[36px] w-full sm:h-[44px] lg:h-[50px] xl:h-[58px]">
-            <TextParticle
-              text="Sense is your real world Jarvis"
-              fontSize={22}
-              fontFamily='"Helvetica Neue", Helvetica, Arial, sans-serif'
-              particleSize={1}
-              particleDensity={1}
-              particleColor="#f8fafc"
-              className="w-full"
-            />
-          </div>
-        </div>
-        <div className="relative mt-[-18px] w-full max-w-xl sm:mt-[-20px]">
-          <div className="relative mx-auto flex w-full max-w-[360px] items-center justify-center sm:max-w-[420px] lg:max-w-[460px] xl:max-w-[520px] 2xl:max-w-[560px]">
-            <Image
-              src={PodGif}
-              alt="Sense pod animation"
-              priority
-              unoptimized
-              className="w-full max-w-[360px] drop-shadow-[0_30px_60px_rgba(10,8,30,0.55)] sm:max-w-[420px] lg:max-w-[460px] xl:max-w-[520px] 2xl:max-w-[560px]"
-            />
-          </div>
-        </div>
-        <div className="relative mt-4 flex w-full max-w-4xl flex-col items-center px-3 text-white/80 sm:mt-8 sm:px-6 lg:mt-10">
-          <span className="text-xs uppercase tracking-[0.32em] text-white/50 sm:text-sm">
-            Snapdragon 8 Elite Core
-          </span>
-          <h3 className="mt-5 text-xl font-semibold text-white sm:text-3xl lg:text-[34px]">
-            Powering Sense with Qualcomm Precision
-          </h3>
-          <p className="mt-2 max-w-2xl text-sm text-white/60 sm:text-base lg:max-w-3xl lg:text-lg">
-            Snapdragon silicon orchestrates every biometric, haptic, and neural routine inside Sense, working in harmony
-            with Samsung memory and Qualcomm power management.
-          </p>
-          <div className="relative mt-8 w-full lg:mt-14">
-            <AnimatedSnapdragonBoard />
-          </div>
         </div>
       </motion.div>
     </section>
