@@ -1,13 +1,21 @@
+import type { Metadata } from "next";
+import { PodShowcase } from "@/components/ui/pod-showcase";
+
+export const metadata: Metadata = {
+  title: "Order",
+};
+
 export default function OrderPage() {
   return (
-    <main className="flex min-h-screen items-center justify-center bg-[#04020d] px-6 py-24 text-center text-white">
-      <div className="max-w-2xl space-y-4">
-        <h1 className="text-4xl font-semibold">Order Sense</h1>
+    <main className="flex min-h-screen flex-col items-center justify-start bg-[#04020d] px-6 py-24 text-center text-white">
+      <div className="mt-10 max-w-3xl space-y-6">
+        <h1 className="text-4xl font-semibold">Hardware Pods</h1>
         <p className="text-base text-white/70">
-          Provide pricing tiers, implementation timelines, and procurement steps for Sense
-          deployments. Replace this placeholder with final sales content.
+          Explore the Sense pod lineup in motion. Each module responds to cursor movement and scroll for a tangible,
+          tactile preview of the hardware experience.
         </p>
       </div>
+      <PodShowcase />
     </main>
   );
 }

@@ -1,3 +1,9 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Neural",
+};
+
 export default function NeuralPage() {
   return (
     <main className="flex min-h-screen items-center justify-center bg-[#04020d] px-6 py-24 text-center text-white">
