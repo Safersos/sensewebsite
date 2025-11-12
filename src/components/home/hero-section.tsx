@@ -95,7 +95,7 @@ export function HeroSection() {
         </div>
       </motion.div>
       <motion.div className="relative z-10 mt-28 w-full sm:mt-32 md:mt-36 lg:mt-40" style={{ y: extendedSectionDrift }}>
-        <div className="mx-auto w-full max-w-6xl rounded-[28px] border border-white/10 bg-gradient-to-b from-white/6 via-white/4 to-white/5 px-6 py-12 shadow-[0_28px_80px_rgba(8,6,28,0.55)] backdrop-blur-2xl sm:px-10 sm:py-16 lg:px-14">
+        <div className="mx-auto w-full max-w-6xl rounded-[28px] border border-white/10 bg-gradient-to-b from-white/6 via-white/4 to-white/5 px-6 py-8 shadow-[0_24px_72px_rgba(8,6,28,0.5)] backdrop-blur-2xl sm:px-10 sm:py-12 lg:px-14">
           <AnimatedHero />
         </div>
       </motion.div>

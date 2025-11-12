@@ -1,10 +1,12 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { MoveRight, PhoneCall } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import HeroGif from "../../../assets/herovid.gif";
 
 function AnimatedHero() {
   const [titleIndex, setTitleIndex] = useState(0);
@@ -20,11 +22,17 @@ function AnimatedHero() {
 
   return (
     <div className="w-full">
-      <div className="mx-auto flex max-w-5xl flex-col items-center justify-center gap-10 py-16 text-center sm:py-24">
-        <Button variant="secondary" size="sm" className="gap-3">
+      <div className="mx-auto flex max-w-5xl flex-col items-center justify-center gap-5 py-8 text-center sm:gap-7 sm:py-10">
+        <Button variant="secondary" size="sm" className="gap-3 -mt-2 sm:-mt-4">
           Read our launch article <MoveRight className="h-4 w-4" />
         </Button>
-        <div className="flex flex-col gap-4">
+        <Image
+          src={HeroGif}
+          alt="Sense neural animation"
+          className="mx-auto h-32 w-32 object-contain sm:h-40 sm:w-40 md:h-44 md:w-44"
+          priority
+        />
+        <div className="flex flex-col gap-2 -mt-5 sm:-mt-7">
           <h2 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl md:text-6xl md:leading-[1.1]">
             <span className="text-cyan-200">This is something</span>
             <span className="relative mt-2 flex w-full justify-center overflow-hidden text-center md:pb-3 md:pt-1">
