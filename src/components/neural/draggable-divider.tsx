@@ -22,7 +22,20 @@ export function DraggableDivider({ onDrag, initialLeftWidth = 50, onDragStart, o
   const [leftWidth, setLeftWidth] = useState(initialLeftWidth);
   const [isDragging, setIsDragging] = useState(false);
   const [colorIndex, setColorIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  // Detect mobile to adjust touch handling
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   // Smooth color animation - rotate colors smoothly
   useEffect(() => {
@@ -33,7 +46,7 @@ export function DraggableDivider({ onDrag, initialLeftWidth = 50, onDragStart, o
     return () => clearInterval(interval);
   }, []);
 
-  // Load from localStorage on mount
+  // Load from localStorage on mount - only run once
   useEffect(() => {
     if (typeof window === 'undefined') return;
     
@@ -43,16 +56,24 @@ export function DraggableDivider({ onDrag, initialLeftWidth = 50, onDragStart, o
       setLeftWidth(savedWidth);
       onDrag(savedWidth);
     }
-  }, [onDrag]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Only run on mount
 
-  // Save to localStorage
+  // Save to localStorage - only save when dragging ends to avoid excessive writes
   useEffect(() => {
     if (typeof window === 'undefined') return;
+    if (isDragging) return; // Don't save while dragging
     
     localStorage.setItem("neural-divider-position", leftWidth.toString());
-  }, [leftWidth]);
+  }, [leftWidth, isDragging]);
 
   const handleMouseDown = () => {
+    setIsDragging(true);
+    onDragStart?.();
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    e.preventDefault(); // Prevent scrolling while dragging
     setIsDragging(true);
     onDragStart?.();
   };
@@ -60,14 +81,14 @@ export function DraggableDivider({ onDrag, initialLeftWidth = 50, onDragStart, o
   useEffect(() => {
     if (!isDragging) return;
 
-    const handleMouseMove = (e: MouseEvent) => {
+    const updateWidth = (clientX: number) => {
       const parent = containerRef.current?.parentElement;
       if (!parent) return;
 
       const containerRect = parent.getBoundingClientRect();
       const containerWidth = containerRect.width;
-      const mouseX = e.clientX - containerRect.left;
-      const newLeftWidth = (mouseX / containerWidth) * 100;
+      const x = clientX - containerRect.left;
+      const newLeftWidth = (x / containerWidth) * 100;
 
       // Constrain between 20% and 80%
       const constrainedWidth = Math.max(20, Math.min(80, newLeftWidth));
@@ -75,31 +96,57 @@ export function DraggableDivider({ onDrag, initialLeftWidth = 50, onDragStart, o
       onDrag(constrainedWidth);
     };
 
+    const handleMouseMove = (e: MouseEvent) => {
+      updateWidth(e.clientX);
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      e.preventDefault(); // Prevent scrolling while dragging
+      if (e.touches.length > 0) {
+        updateWidth(e.touches[0].clientX);
+      }
+    };
+
     const handleMouseUp = () => {
       setIsDragging(false);
       onDragEnd?.();
     };
 
+    const handleTouchEnd = () => {
+      setIsDragging(false);
+      onDragEnd?.();
+    };
+
+    // Mouse events
     document.addEventListener("mousemove", handleMouseMove);
     document.addEventListener("mouseup", handleMouseUp);
+
+    // Touch events
+    document.addEventListener("touchmove", handleTouchMove, { passive: false });
+    document.addEventListener("touchend", handleTouchEnd);
+    document.addEventListener("touchcancel", handleTouchEnd);
 
     return () => {
       document.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseup", handleMouseUp);
+      document.removeEventListener("touchmove", handleTouchMove);
+      document.removeEventListener("touchend", handleTouchEnd);
+      document.removeEventListener("touchcancel", handleTouchEnd);
     };
   }, [isDragging, onDrag]);
 
   return (
     <div
       ref={containerRef}
-      className={`absolute top-0 bottom-0 cursor-col-resize z-50 flex items-center justify-center ${
+      className={`absolute top-0 bottom-0 cursor-col-resize touch-none z-50 flex items-center justify-center ${
         !isDragging ? "transition-all duration-300 ease-out" : ""
       }`}
       style={{ left: `${leftWidth}%`, transform: "translateX(-50%)" }}
       onMouseDown={handleMouseDown}
+      onTouchStart={handleTouchStart}
     >
-      {/* Wider invisible area for easier dragging */}
-      <div className="absolute inset-0 w-8 -translate-x-1/2" />
+      {/* Wider invisible area for easier dragging - larger on mobile for touch */}
+      <div className="absolute inset-0 w-12 sm:w-8 -translate-x-1/2" style={{ touchAction: 'none' }} />
       {/* Visual line */}
       <div className="h-full w-1 bg-white/20 relative" />
       {/* Animated dots handle */}

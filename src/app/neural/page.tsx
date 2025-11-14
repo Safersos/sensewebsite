@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import ShaderBackground from "@/components/ui/shader-background";
 import { DraggableDivider } from "@/components/neural/draggable-divider";
 import { AppMarketplace } from "@/components/neural/app-marketplace";
@@ -23,9 +23,9 @@ export default function NeuralPage() {
 
   const rightWidth = 100 - leftWidth;
 
-  const handleDrag = (width: number) => {
+  const handleDrag = useCallback((width: number) => {
     setLeftWidth(width);
-  };
+  }, []);
 
   return (
     <main className="relative flex min-h-screen w-full overflow-hidden">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { AppDetailSheet } from "./app-detail-sheet";
@@ -11,8 +11,8 @@ interface AppTileProps {
   onAddClick: (appId: number) => void;
 }
 
-// Placeholder app data
-const APP_DATA: Record<number, { name: string; description: string; tags: string[] }> = {
+// Placeholder module data
+const MODULE_DATA: Record<number, { name: string; description: string; tags: string[] }> = {
   0: {
     name: "Music Player",
     description: "Stream and manage your music library with AI-powered recommendations and seamless playback.",
@@ -20,7 +20,7 @@ const APP_DATA: Record<number, { name: string; description: string; tags: string
   },
   1: {
     name: "Note Taking",
-    description: "Intelligent note-taking app with voice transcription, handwriting recognition, and smart organization.",
+    description: "Intelligent note-taking module with voice transcription, handwriting recognition, and smart organization.",
     tags: ["Write notes", "Voice notes", "Organize notes"],
   },
   2: {
@@ -32,7 +32,7 @@ const APP_DATA: Record<number, { name: string; description: string; tags: string
 
 function AppTile({ index, onTileClick, onAddClick }: AppTileProps) {
   const appId = index + 1;
-  const appName = APP_DATA[index % 3]?.name || `App ${appId}`;
+  const moduleName = MODULE_DATA[index % 3]?.name || `Module ${appId}`;
 
   return (
     <div className="flex flex-col items-center gap-3 p-4 rounded-lg bg-black/30 backdrop-blur-sm border border-white/10 hover:border-white/20 transition-colors cursor-pointer"
@@ -42,7 +42,7 @@ function AppTile({ index, onTileClick, onAddClick }: AppTileProps) {
       </div>
       <div className="text-center">
         <h3 className="text-sm font-medium text-white/90 mb-1">
-          {appName}
+          {moduleName}
         </h3>
         <p className="text-xs text-white/50">Placeholder</p>
       </div>
@@ -72,8 +72,17 @@ export function AppMarketplace({ leftWidth, isDragging = false }: AppMarketplace
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [isCreateSheetOpen, setIsCreateSheetOpen] = useState(false);
 
-  // Generate 32 placeholder app tiles (8 rows × 4 columns)
+  // Generate 32 placeholder module tiles (8 rows × 4 columns)
   const appTiles = Array.from({ length: 32 }, (_, i) => i);
+
+  // Dynamic grid columns based on leftWidth - memoized to prevent re-renders
+  // 20% → 1 column, 30% → 2 columns, 40% → 3 columns, 50%+ → 4 columns
+  const gridCols = useMemo(() => {
+    if (leftWidth < 25) return "grid-cols-1";
+    if (leftWidth < 35) return "grid-cols-2";
+    if (leftWidth < 45) return "grid-cols-3";
+    return "grid-cols-4";
+  }, [leftWidth]);
 
   const handleTileClick = (appId: number) => {
     setSelectedApp(appId);
@@ -99,13 +108,15 @@ export function AppMarketplace({ leftWidth, isDragging = false }: AppMarketplace
 
   const handleCloseCreateSheet = () => {
     setIsCreateSheetOpen(false);
+    // Delay clearing to allow exit animation - but for create mode, we don't need to keep app data
+    // The sheet component handles create mode differently
   };
 
   const getAppDetail = (appId: number) => {
-    const appIndex = (appId - 1) % 3;
-    const baseData = APP_DATA[appIndex] || {
-      name: `App ${appId}`,
-      description: "A powerful app for your Sense device. Connect and integrate seamlessly with your workflow.",
+    const moduleIndex = (appId - 1) % 3;
+    const baseData = MODULE_DATA[moduleIndex] || {
+      name: `Module ${appId}`,
+      description: "A powerful module for your Sense device. Connect and integrate seamlessly with your workflow.",
       tags: ["Feature 1", "Feature 2", "Feature 3"],
     };
     return {
@@ -124,17 +135,17 @@ export function AppMarketplace({ leftWidth, isDragging = false }: AppMarketplace
       >
         <div className="p-4 sm:p-6" style={{ direction: "ltr" }}>
           <div className="flex items-center justify-between mb-4 sm:mb-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-white">App Marketplace</h2>
+            <h2 className="text-lg sm:text-xl font-semibold text-white">Pre-trained Modules</h2>
             <button
               onClick={handleCreateClick}
               className="p-2 rounded-lg bg-white/10 hover:bg-white/20 border border-white/20 text-white transition-colors"
-              aria-label="Create new app"
-              title="Create your own app"
+              aria-label="Request new module"
+              title="Request new module"
             >
               <Plus className="w-5 h-5" />
             </button>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-3 md:gap-4">
+          <div className={`grid ${gridCols} gap-2 sm:gap-3 md:gap-4`}>
             {appTiles.map((index) => (
               <AppTile 
                 key={index} 
