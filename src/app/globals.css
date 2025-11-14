@@ -776,3 +776,55 @@ video {
     opacity: 0;
   }
 }
+
+/* Neural page custom scrollbars */
+/* Left-aligned scrollbar for app marketplace */
+.neural-scrollbar-left {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+  direction: rtl;
+}
+
+.neural-scrollbar-left > * {
+  direction: ltr;
+}
+
+.neural-scrollbar-left::-webkit-scrollbar {
+  width: 6px;
+}
+
+.neural-scrollbar-left::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.neural-scrollbar-left::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+
+.neural-scrollbar-left::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Right-aligned scrollbar for chat */
+.neural-scrollbar-right {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+.neural-scrollbar-right::-webkit-scrollbar {
+  width: 6px;
+}
+
+.neural-scrollbar-right::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.neural-scrollbar-right::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+
+.neural-scrollbar-right::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
