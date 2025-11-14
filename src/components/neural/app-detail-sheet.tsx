@@ -272,7 +272,7 @@ export function AppDetailSheet({ app, isOpen, onClose, isCreateMode = false, lef
                     </Button>
                   </div>
                 </>
-              ) : (
+              ) : app ? (
                 <>
                   {/* App Icon/Header */}
                   <div className="flex items-start gap-4 mb-6">
@@ -331,7 +331,7 @@ export function AppDetailSheet({ app, isOpen, onClose, isCreateMode = false, lef
                     </div>
                   </div>
                 </>
-              )}
+              ) : null}
             </div>
           </motion.div>
         </>
