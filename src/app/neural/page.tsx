@@ -12,6 +12,8 @@ export default function NeuralPage() {
 
   // Load saved position on mount
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
     const saved = localStorage.getItem("neural-divider-position");
     if (saved) {
       const savedWidth = parseFloat(saved);

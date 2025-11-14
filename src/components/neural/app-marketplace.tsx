@@ -122,9 +122,9 @@ export function AppMarketplace({ leftWidth, isDragging = false }: AppMarketplace
         }`}
         style={{ width: `${leftWidth}%` }}
       >
-        <div className="p-6" style={{ direction: "ltr" }}>
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-semibold text-white">App Marketplace</h2>
+        <div className="p-4 sm:p-6" style={{ direction: "ltr" }}>
+          <div className="flex items-center justify-between mb-4 sm:mb-6">
+            <h2 className="text-lg sm:text-xl font-semibold text-white">App Marketplace</h2>
             <button
               onClick={handleCreateClick}
               className="p-2 rounded-lg bg-white/10 hover:bg-white/20 border border-white/20 text-white transition-colors"
@@ -134,7 +134,7 @@ export function AppMarketplace({ leftWidth, isDragging = false }: AppMarketplace
               <Plus className="w-5 h-5" />
             </button>
           </div>
-          <div className="grid grid-cols-4 gap-2 sm:gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-3 md:gap-4">
             {appTiles.map((index) => (
               <AppTile 
                 key={index} 

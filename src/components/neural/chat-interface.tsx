@@ -14,12 +14,12 @@ export function ChatInterface({ rightWidth, isDragging = false }: ChatInterfaceP
       style={{ width: `${rightWidth}%` }}
     >
       {/* Chat Header */}
-      <div className="p-4 border-b border-white/20">
-        <h2 className="text-xl font-semibold text-white">Sense Chat</h2>
+      <div className="p-3 sm:p-4 border-b border-white/20">
+        <h2 className="text-lg sm:text-xl font-semibold text-white">Sense Chat</h2>
       </div>
 
       {/* Messages Area */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4 neural-scrollbar-right">
+      <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-4 neural-scrollbar-right">
         {/* Placeholder: Empty chat for now */}
         <div className="flex items-center justify-center h-full">
           <p className="text-white/50 text-sm">Start a conversation with Sense</p>
@@ -27,7 +27,7 @@ export function ChatInterface({ rightWidth, isDragging = false }: ChatInterfaceP
       </div>
 
       {/* Input Area */}
-      <div className="p-4 border-t border-white/20">
+      <div className="p-3 sm:p-4 border-t border-white/20">
         <div className="relative">
           <textarea
             placeholder="Hi, I'm Sense, how can I help you?"

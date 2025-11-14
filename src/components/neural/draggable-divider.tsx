@@ -35,16 +35,20 @@ export function DraggableDivider({ onDrag, initialLeftWidth = 50, onDragStart, o
 
   // Load from localStorage on mount
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
     const saved = localStorage.getItem("neural-divider-position");
     if (saved) {
       const savedWidth = parseFloat(saved);
       setLeftWidth(savedWidth);
       onDrag(savedWidth);
     }
-  }, []);
+  }, [onDrag]);
 
   // Save to localStorage
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
     localStorage.setItem("neural-divider-position", leftWidth.toString());
   }, [leftWidth]);
 

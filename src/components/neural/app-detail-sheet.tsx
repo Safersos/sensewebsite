@@ -30,6 +30,8 @@ export function AppDetailSheet({ app, isOpen, onClose, isCreateMode = false, lef
 
   // Detect mobile vs desktop
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
@@ -160,7 +162,7 @@ export function AppDetailSheet({ app, isOpen, onClose, isCreateMode = false, lef
             }}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="max-w-2xl mx-auto p-6 sm:p-8">
+            <div className="max-w-2xl mx-auto p-4 sm:p-6 md:p-8">
               {/* Close button */}
               <button
                 onClick={onClose}
