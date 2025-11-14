@@ -1,9 +1,6 @@
-import Image from "next/image";
 import type { Metadata } from "next";
 import { AnimatedSnapdragonBoard } from "@/components/ui/animated-snapdragon-board";
 import { Lightning } from "@/components/ui/hero-odyssey";
-import { TextParticle } from "@/components/ui/text-particle";
-import PodGif from "../../../assets/pod.gif";
 
 export const metadata: Metadata = {
   title: "Hardware",
@@ -30,7 +27,6 @@ export default function HardwarePage() {
               flashDuration={0.18}
             />
           </div>
-          <div className="absolute top-[55%] left-1/2 h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle_at_25%_90%,_#1e386b_25%,_#000000de_70%,_#000000ed_100%)] backdrop-blur-3xl sm:h-[520px] sm:w-[520px] md:h-[580px] md:w-[580px] lg:h-[640px] lg:w-[640px]" />
         </div>
 
         <div className="relative z-10 mx-auto flex w-full max-w-4xl flex-col items-center text-center text-white/80">
@@ -47,33 +43,6 @@ export default function HardwarePage() {
 
         <div className="relative z-10 mt-10 w-full max-w-5xl px-2 sm:mt-12 sm:px-4">
           <AnimatedSnapdragonBoard />
-        </div>
-
-        <div className="relative z-10 mt-14 flex w-full max-w-5xl flex-col items-center text-center sm:mt-16">
-          <div className="relative mx-auto flex w-full max-w-[280px] items-center justify-center sm:max-w-[360px] md:max-w-[420px] lg:max-w-[480px] xl:max-w-[520px] 2xl:max-w-[560px]">
-            <div className="relative w-full">
-              <Image
-                src={PodGif}
-                alt="Sense pod animation"
-                priority
-                unoptimized
-                className="w-full drop-shadow-[0_30px_60px_rgba(10,8,30,0.55)]"
-              />
-              <div className="pointer-events-none absolute inset-0 flex items-end justify-center px-3 pb-4 sm:px-4 sm:pb-8 lg:pb-10">
-                <div className="h-[32px] w-full max-w-[220px] sm:h-[42px] sm:max-w-[280px] md:h-[48px] md:max-w-[320px] lg:h-[52px] lg:max-w-[360px]">
-                  <TextParticle
-                    text="Sense is your real world Jarvis"
-                    fontSize={22}
-                    fontFamily='"Helvetica Neue", Helvetica, Arial, sans-serif'
-                    particleSize={1}
-                    particleDensity={1}
-                    particleColor="#f8fafc"
-                    className="w-full"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
     </main>
