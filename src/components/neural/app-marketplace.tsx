@@ -152,6 +152,7 @@ export function AppMarketplace({ leftWidth, isDragging = false }: AppMarketplace
         isOpen={isSheetOpen}
         onClose={handleCloseSheet}
         isCreateMode={false}
+        leftWidth={leftWidth}
       />
       
       <AppDetailSheet
@@ -159,6 +160,7 @@ export function AppMarketplace({ leftWidth, isDragging = false }: AppMarketplace
         isOpen={isCreateSheetOpen}
         onClose={handleCloseCreateSheet}
         isCreateMode={true}
+        leftWidth={leftWidth}
       />
     </>
   );

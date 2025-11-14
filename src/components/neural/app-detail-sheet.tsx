@@ -17,14 +17,26 @@ interface AppDetailSheetProps {
   isOpen: boolean;
   onClose: () => void;
   isCreateMode?: boolean;
+  leftWidth?: number; // Left panel width percentage for desktop positioning
 }
 
-export function AppDetailSheet({ app, isOpen, onClose, isCreateMode = false }: AppDetailSheetProps) {
+export function AppDetailSheet({ app, isOpen, onClose, isCreateMode = false, leftWidth = 50 }: AppDetailSheetProps) {
   const [senseCode, setSenseCode] = useState("");
   const [appName, setAppName] = useState("");
   const [appDescription, setAppDescription] = useState("");
   const [tags, setTags] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState("");
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect mobile vs desktop
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   // Reset form when sheet opens/closes
   useEffect(() => {
@@ -100,7 +112,7 @@ export function AppDetailSheet({ app, isOpen, onClose, isCreateMode = false }: A
     <AnimatePresence>
       {shouldShowInAnimatePresence && (
         <>
-          {/* Backdrop */}
+          {/* Backdrop - only on mobile, desktop uses transparent overlay */}
           <motion.div
             key={`${sheetKey}-backdrop`}
             initial={{ opacity: 0 }}
@@ -111,7 +123,11 @@ export function AppDetailSheet({ app, isOpen, onClose, isCreateMode = false }: A
               duration: 0.3,
               ease: [0.4, 0, 0.2, 1]
             }}
-            className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm"
+            className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm md:bg-black/40 md:left-0"
+            style={{
+              // On desktop: only cover left panel area
+              width: !isMobile ? `${leftWidth}%` : '100%',
+            }}
             onClick={onClose}
           />
 
@@ -136,7 +152,12 @@ export function AppDetailSheet({ app, isOpen, onClose, isCreateMode = false }: A
               stiffness: 280,
               mass: 0.7,
             }}
-            className="fixed bottom-0 left-0 right-0 z-[101] max-h-[90vh] overflow-y-auto bg-black/80 backdrop-blur-xl border-t border-white/20 rounded-t-2xl shadow-2xl"
+            className="fixed bottom-0 left-0 z-[101] max-h-[90vh] overflow-y-auto bg-black/80 backdrop-blur-xl border-t border-white/20 rounded-t-2xl shadow-2xl md:right-auto md:rounded-t-none"
+            style={{
+              // On mobile: full width, on desktop: constrained to left panel
+              width: !isMobile ? `${leftWidth}%` : '100%',
+              right: !isMobile ? 'auto' : '0',
+            }}
             onClick={(e) => e.stopPropagation()}
           >
             <div className="max-w-2xl mx-auto p-6 sm:p-8">
