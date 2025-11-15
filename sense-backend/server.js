@@ -13,7 +13,7 @@ const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const OPENAI_MODEL = process.env.OPENAI_MODEL || 'gpt-4o-mini';
 const SYSTEM_PROMPT = process.env.SYSTEM_PROMPT || 'You are SenseBot — friendly and factual.';
 const AUTH_KEY = process.env.AUTH_KEY || '';
-const FRONTEND_URL = process.env.FRONTEND_URL || '*';
+const FRONTEND_URL = process.env.FRONTEND_URL || 'https://sensewearable.com';
 
 /**
  * Simple memory store:
@@ -99,6 +99,21 @@ async function getRetrievalContext(userMessage, userId) {
   // For now return empty string. Replace with vector DB calls if needed.
   return '';
 }
+
+/**
+ * Root endpoint
+ */
+app.get('/', (req, res) => {
+  res.json({ 
+    service: 'Sense Backend API',
+    status: 'running',
+    endpoints: {
+      health: '/health',
+      session: 'POST /session',
+      chat: 'POST /chat'
+    }
+  });
+});
 
 /**
  * Health check endpoint
@@ -222,11 +237,18 @@ async function callOpenAIChat(messages) {
   return json;
 }
 
-app.listen(PORT, () => {
-  console.log(`🚀 Sense backend listening on port ${PORT}`);
-  console.log(`📡 Health check: http://localhost:${PORT}/health`);
-  if (!OPENAI_API_KEY) {
-    console.warn('⚠️  WARNING: OPENAI_API_KEY not set in environment variables');
-  }
-});
+// Export for Vercel serverless functions
+export default app;
+
+// For local development, also start the server
+// (Vercel will ignore this in serverless mode)
+if (!process.env.VERCEL && !process.env.VERCEL_ENV) {
+  app.listen(PORT, () => {
+    console.log(`🚀 Sense backend listening on port ${PORT}`);
+    console.log(`📡 Health check: http://localhost:${PORT}/health`);
+    if (!OPENAI_API_KEY) {
+      console.warn('⚠️  WARNING: OPENAI_API_KEY not set in environment variables');
+    }
+  });
+}
 
