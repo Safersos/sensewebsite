@@ -1,10 +1,19 @@
-import { writeFileSync } from 'fs';
+import { writeFileSync, existsSync } from 'fs';
 
+// Check if .env already exists
+if (existsSync('.env')) {
+  console.log('⚠️  .env file already exists. Skipping creation.');
+  console.log('📝 If you need to update it, edit sense-backend/.env manually.');
+  process.exit(0);
+}
+
+// Template for .env file - user needs to add their API key
 const envContent = `# Server Configuration
 PORT=8080
 
 # OpenAI API Configuration
-OPENAI_API_KEY=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
+# IMPORTANT: Add your OpenAI API key here (get it from https://platform.openai.com/api-keys)
+OPENAI_API_KEY=your-api-key-here
 
 # Model to use (options: gpt-4o-mini, gpt-4o, gpt-4-turbo, etc.)
 OPENAI_MODEL=gpt-4o-mini
@@ -23,6 +32,7 @@ SYSTEM_PROMPT="You are SenseBot — friendly, factual, and helpful. Use product 
 `;
 
 writeFileSync('.env', envContent);
-console.log('✅ .env file created successfully with your API key!');
+console.log('✅ .env template file created!');
+console.log('📝 IMPORTANT: Edit sense-backend/.env and add your OpenAI API key to OPENAI_API_KEY');
 console.log('📝 Location: sense-backend/.env');
 
