@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useMemo } from "react";
+import { createSession, sendMessage } from "@/lib/api/chat";
 
 interface ChatMessage {
   id: string;
@@ -18,8 +19,30 @@ export function ChatInterface({ rightWidth, isDragging = false }: ChatInterfaceP
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [sessionId, setSessionId] = useState<string | null>(null);
+  const [isInitializing, setIsInitializing] = useState(true);
+  const [connectionError, setConnectionError] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  // Initialize session on mount
+  useEffect(() => {
+    const initSession = async () => {
+      try {
+        setIsInitializing(true);
+        const newSessionId = await createSession();
+        setSessionId(newSessionId);
+        setConnectionError(null);
+      } catch (error) {
+        console.error("Failed to initialize session:", error);
+        setConnectionError("Failed to connect to Sense. Please check if the backend is running.");
+      } finally {
+        setIsInitializing(false);
+      }
+    };
+
+    initSession();
+  }, []);
 
   // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
@@ -35,7 +58,7 @@ export function ChatInterface({ rightWidth, isDragging = false }: ChatInterfaceP
   }, [inputValue]);
 
   const handleSend = async () => {
-    if (!inputValue.trim() || isLoading) return;
+    if (!inputValue.trim() || isLoading || !sessionId) return;
 
     const userMessage: ChatMessage = {
       id: Date.now().toString(),
@@ -45,8 +68,10 @@ export function ChatInterface({ rightWidth, isDragging = false }: ChatInterfaceP
 
     // Add user message
     setMessages((prev) => [...prev, userMessage]);
+    const messageText = inputValue.trim();
     setInputValue("");
     setIsLoading(true);
+    setConnectionError(null);
 
     // Add loading message
     const loadingMessageId = (Date.now() + 1).toString();
@@ -58,24 +83,44 @@ export function ChatInterface({ rightWidth, isDragging = false }: ChatInterfaceP
     };
     setMessages((prev) => [...prev, loadingMessage]);
 
-    // Simulate API call delay
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    try {
+      // Call the backend API
+      const reply = await sendMessage(sessionId, messageText);
 
-    // Replace loading message with response
-    setMessages((prev) =>
-      prev.map((msg) =>
-        msg.id === loadingMessageId
-          ? {
-              id: loadingMessageId,
-              role: "assistant",
-              content: "Not connected to Sense",
-              isLoading: false,
-            }
-          : msg
-      )
-    );
+      // Replace loading message with response
+      setMessages((prev) =>
+        prev.map((msg) =>
+          msg.id === loadingMessageId
+            ? {
+                id: loadingMessageId,
+                role: "assistant",
+                content: reply,
+                isLoading: false,
+              }
+            : msg
+        )
+      );
+    } catch (error) {
+      console.error("Error sending message:", error);
+      const errorMessage = error instanceof Error ? error.message : "Failed to get response from Sense";
+      setConnectionError(errorMessage);
 
-    setIsLoading(false);
+      // Replace loading message with error
+      setMessages((prev) =>
+        prev.map((msg) =>
+          msg.id === loadingMessageId
+            ? {
+                id: loadingMessageId,
+                role: "assistant",
+                content: `Error: ${errorMessage}`,
+                isLoading: false,
+              }
+            : msg
+        )
+      );
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -107,13 +152,33 @@ export function ChatInterface({ rightWidth, isDragging = false }: ChatInterfaceP
       style={{ width: `${rightWidth}%` }}
     >
       {/* Chat Header */}
-      <div className={`${padding} border-b border-white/20 flex-shrink-0`}>
+      <div className={`${padding} border-b border-white/20 flex-shrink-0 flex items-center justify-between`}>
         <h2 className={`${textSize} font-semibold text-white truncate`}>Sense Chat</h2>
+        {isInitializing && (
+          <span className="text-xs text-white/50">Connecting...</span>
+        )}
+        {connectionError && !isInitializing && (
+          <span className="text-xs text-red-300" title={connectionError}>⚠️ Connection Error</span>
+        )}
+        {!isInitializing && !connectionError && sessionId && (
+          <span className="text-xs text-green-300">● Connected</span>
+        )}
       </div>
 
       {/* Messages Area */}
       <div className={`flex-1 overflow-y-auto ${padding} space-y-3 sm:space-y-4 neural-scrollbar-right`}>
-        {messages.length === 0 ? (
+        {isInitializing ? (
+          <div className="flex items-center justify-center h-full">
+            <div className="flex flex-col items-center gap-2">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-white/60 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
+                <div className="w-2 h-2 bg-white/60 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
+                <div className="w-2 h-2 bg-white/60 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+              </div>
+              <p className="text-white/50 text-xs sm:text-sm">Connecting to Sense...</p>
+            </div>
+          </div>
+        ) : messages.length === 0 ? (
           <div className="flex items-center justify-center h-full">
             <p className="text-white/50 text-xs sm:text-sm">Start a conversation with Sense</p>
           </div>
@@ -163,7 +228,7 @@ export function ChatInterface({ rightWidth, isDragging = false }: ChatInterfaceP
               rightWidth < 30 ? "text-xs" : "text-sm sm:text-base"
             }`}
             rows={1}
-            disabled={isLoading}
+            disabled={isLoading || isInitializing || !sessionId}
           />
           <button
             onClick={handleSend}
