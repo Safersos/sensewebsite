@@ -1,0 +1,14 @@
+# Ignore frontend files for backend deployment
+../src/
+../assets/
+../public/
+../next.config.ts
+../package.json
+../tsconfig.json
+../postcss.config.mjs
+../eslint.config.mjs
+../.gitignore
+../README.md
+../*.md
+!../sense-backend/
+
