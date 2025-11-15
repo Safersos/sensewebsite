@@ -51,9 +51,9 @@ git push origin main --force
 ## Option 3: Use BFG Repo-Cleaner (Best for multiple commits)
 
 1. Download BFG: https://rtyley.github.io/bfg-repo-cleaner/
-2. Create a file `keys.txt` with your API key:
+2. Create a file `keys.txt` with your API key (replace with your actual key):
    ```
-   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
+   sk-proj-YOUR-API-KEY-HERE
    ```
 3. Run:
    ```bash
