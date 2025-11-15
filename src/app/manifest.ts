@@ -4,7 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "Sense",
     short_name: "Sense",
-    description: "Sense — a new frontier for motion-led product design.",
+    description: "Sense is a next-gen wearable that fuses camera, audio, and AI into a single smart assistant you carry everywhere",
     start_url: "/",
     scope: "/",
     display: "standalone",

@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     default: "Sense",
     template: "%s | Sense",
   },
-  description: "Sense — a new frontier for motion-led product design.",
+  description: "Sense is a next-gen wearable that fuses camera, audio, and AI into a single smart assistant you carry everywhere",
   manifest: "/manifest.webmanifest",
   icons: {
     icon: "/favicon.ico",
@@ -39,6 +39,17 @@ export const metadata: Metadata = {
     capable: true,
     statusBarStyle: "black-translucent",
     title: "Sense",
+  },
+  openGraph: {
+    title: "Sense",
+    description: "Sense is a next-gen wearable that fuses camera, audio, and AI into a single smart assistant you carry everywhere",
+    type: "website",
+    siteName: "Sense",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Sense",
+    description: "Sense is a next-gen wearable that fuses camera, audio, and AI into a single smart assistant you carry everywhere",
   },
 };
 
