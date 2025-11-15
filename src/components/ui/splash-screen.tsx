@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 
 import AnimatedIcon from "../../../assets/animatedicon.gif";
 
-const MINIMUM_VISIBLE_DURATION = 3000;
+const MINIMUM_VISIBLE_DURATION = 2000;
 const EXIT_DURATION = 400;
 
 export function SplashScreen() {
